@@ -7,231 +7,280 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
-.phone{width:340px;height:680px;border-radius:44px;overflow:hidden;box-shadow:0 0 0 10px #1c1c1e,0 40px 80px rgba(0,0,0,.6);display:flex;flex-direction:column;background:#fff;position:relative}
 
-.sb{background:#075e54;padding:9px 18px 5px;display:flex;justify-content:space-between;flex-shrink:0}
-.sb span{color:#fff;font-size:11px;font-weight:600}
-.hd{background:#075e54;padding:7px 12px 9px;display:flex;align-items:center;gap:9px;flex-shrink:0}
-.hd-bk{color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:2px 4px}
+/* ── THEME VARIABLES ── */
+body.light{--bg:#fff;--bg2:#fafaf8;--bg3:#f5f5f5;--bg-chat:#efeae2;--chat-pattern:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4ccc0' fill-opacity='0.18'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z'/%3E%3C/g%3E%3C/svg%3E");--txt:#111;--txt2:#667781;--txt3:#8696a0;--txt4:#aaa;--bdr:#f0f0f0;--bdr2:#e0e0e0;--pill-bdr:#d0d8f0;--pill-txt:#2C3E7A;--pill-bg:#fff;--pill-act:#eef2ff;--hd:#2C3E7A;--hd-txt:#fff;--tab-on:#2C3E7A;--badge:#2C3E7A;--badge-txt:#fff;--sk-bg:#fff8f2;--sk-bdr:#ffd0b0;--sk-txt:#bf3a00;--sk-best:#d95c1a;--lb-bg:#edf7ee;--lb-bdr:#c8e6c9;--lb-txt:#1b5e20;--lb-acc:#2e7d32;--ci-nm:#111;--ci-bg:#fff;--ci-act:#f5f5f5;--msg-in:#fff;--ibox:#fff;--sec-hd:#f8fafc;--yr-bg:#e8f2ff;--yr-txt:#2C3E7A;--ip-cover-a:#2C3E7A;--ip-cover-b:#1a2f6b;--doc-bg:#fff;--doc-txt:#333;--weak-bg:#fff;--tb-off:#aaa;--sk-bar-top:rgba(191,58,0,0.12);--sk-bar-bdr:rgba(191,58,0,0.25);--story-a:#0a2a4a;--story-b:#2C3E7A;--info-bg:#f0f2f0;--settings-bg:#f0f2f0;--phone-bezel:#1a1a1a}
+body.dark{--bg:#0d1117;--bg2:#161b22;--bg3:#1e2530;--bg-chat:#1a1f28;--chat-pattern:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z'/%3E%3C/g%3E%3C/svg%3E");--txt:#e8eaf0;--txt2:#8b9bb4;--txt3:#6b7a94;--txt4:#4a5568;--bdr:rgba(255,255,255,0.07);--bdr2:rgba(255,255,255,0.12);--pill-bdr:rgba(100,130,220,0.35);--pill-txt:#93b4ff;--pill-bg:#1e2a44;--pill-act:#253050;--hd:#1e2a44;--hd-txt:#e8eaf0;--tab-on:#93b4ff;--badge:#3b5bdb;--badge-txt:#fff;--sk-bg:rgba(234,88,12,0.1);--sk-bdr:rgba(234,88,12,0.2);--sk-txt:#fb923c;--sk-best:#f97316;--lb-bg:rgba(46,125,50,0.12);--lb-bdr:rgba(46,125,50,0.25);--lb-txt:#86efac;--lb-acc:#4ade80;--ci-nm:#e8eaf0;--ci-bg:#0d1117;--ci-act:#161b22;--msg-in:#1e2530;--ibox:#1e2530;--sec-hd:#161b22;--yr-bg:#1e2a44;--yr-txt:#93b4ff;--ip-cover-a:#1e2a44;--ip-cover-b:#131d35;--doc-bg:#161b22;--doc-txt:#c9d1d9;--weak-bg:#1e2530;--tb-off:rgba(255,255,255,0.3);--sk-bar-top:rgba(251,146,60,0.1);--sk-bar-bdr:rgba(251,146,60,0.2);--story-a:#0a1628;--story-b:#1e2a44;--info-bg:#161b22;--settings-bg:#161b22;--phone-bezel:#2d2d2d}
+
+body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;transition:background .3s}
+
+/* ONBOARDING */
+.ob{position:absolute;top:0;left:0;width:100%;height:100%;z-index:60;display:flex;flex-direction:column;background:var(--bg)}
+.ob.hide{display:none}
+.ob-top{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,var(--hd),#1a2f6b)}
+.ob-logo{font-family:'Nunito',sans-serif;font-size:32px;font-weight:800;color:#fff;letter-spacing:2px;margin-bottom:4px}
+.ob-sub{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:24px}
+.ob-step{display:none;width:100%;max-width:280px}
+.ob-step.on{display:block}
+.ob-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.ob-input{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px}
+.ob-input:focus{border-color:rgba(255,255,255,.5)}
+.ob-input::placeholder{color:rgba(255,255,255,.3)}
+.ob-select{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px;appearance:none;-webkit-appearance:none;cursor:pointer}
+.ob-select option{background:#1a2f6b;color:#fff}
+.ob-btn{width:100%;padding:12px;border-radius:10px;border:none;background:#fff;color:var(--hd);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:4px}
+.ob-btn:active{opacity:.85}
+.ob-dots{display:flex;gap:6px;margin-top:16px;justify-content:center}
+.ob-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
+.ob-dot.on{background:#fff}
+.ob-skip{font-size:11px;color:rgba(255,255,255,.4);margin-top:12px;cursor:pointer;text-align:center}
+
+/* LINE ART ICONS */
+.ic{display:inline-flex;align-items:center;justify-content:center}
+.ic svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* SEARCH BAR */
+.search-bar{background:var(--bg3);padding:6px 10px;display:flex;align-items:center;gap:7px;flex-shrink:0}
+.search-box{flex:1;display:flex;align-items:center;gap:8px;background:var(--ibox);border-radius:22px;padding:9px 14px;cursor:pointer}
+.search-box svg{width:15px;height:15px;stroke:var(--txt3);stroke-width:2;fill:none}
+.search-box span{font-size:13px;color:var(--txt3)}
+.phone{width:340px;height:680px;border-radius:44px;overflow:hidden;box-shadow:0 0 0 10px var(--phone-bezel),0 40px 80px rgba(0,0,0,.6);display:flex;flex-direction:column;background:var(--bg);position:relative;transition:background .3s}
+
+.sb{background:var(--hd);padding:9px 18px 5px;display:flex;justify-content:space-between;flex-shrink:0}
+.sb span{color:var(--hd-txt);font-size:11px;font-weight:600}
+.hd{background:var(--hd);padding:7px 12px 9px;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.hd-bk{color:var(--hd-txt);font-size:22px;cursor:pointer;line-height:1;padding:2px 4px}
 .hd-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;background:rgba(255,255,255,.2);color:#fff}
 .hd-info{flex:1;cursor:pointer}
-.hd-nm{color:#fff;font-size:15px;font-weight:600}
+.hd-nm{color:var(--hd-txt);font-size:15px;font-weight:600}
 .hd-sb{color:rgba(255,255,255,.7);font-size:10.5px;margin-top:1px}
 .hd-more{color:rgba(255,255,255,.85);font-size:19px;cursor:pointer}
 .sc{display:none;flex-direction:column;height:100%;overflow:hidden}
 .sc.on{display:flex}
 
 /* HOME */
-.hm-hd{background:#075e54;padding:13px 14px 10px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
-.hm-hd-t{color:#fff;font-size:22px;font-weight:600;letter-spacing:.5px;font-family:'Nunito',sans-serif}
+.hm-hd{background:var(--hd);padding:13px 14px 10px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.hm-hd-t{color:var(--hd-txt);font-size:22px;font-weight:800;letter-spacing:1px;font-family:'Nunito',sans-serif}
 .hm-hd-ic{color:rgba(255,255,255,.85);font-size:18px;display:flex;gap:16px}
 
-/* ── STORY ROW ──
-   Instagram ring: ~3px gradient border, 3px white gap, then avatar
-   We achieve this with a wrapper that has the gradient bg,
-   padding creates the white gap inside. */
-.story-row{display:flex;overflow-x:auto;padding:10px 10px;background:#fff;border-bottom:.5px solid #f0f0f0;flex-shrink:0;scrollbar-width:none}
+/* STORY ROW */
+.story-row{display:flex;overflow-x:auto;padding:10px 10px;background:var(--bg);border-bottom:.5px solid var(--bdr);flex-shrink:0;scrollbar-width:none}
 .story-row::-webkit-scrollbar{display:none}
 .si{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;flex-shrink:0;width:60px}
-/* Gradient ring wrapper — 3px ring + 3px white gap = 6px total padding */
 .si-ring{width:50px;height:50px;border-radius:50%;padding:3px;position:relative;display:flex;align-items:center;justify-content:center}
 .si-ring.new{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
 .si-ring.seen{background:#ccc}
-.si-gap{width:100%;height:100%;border-radius:50%;background:#fff;padding:2px;display:flex;align-items:center;justify-content:center}
+.si-gap{width:100%;height:100%;border-radius:50%;background:var(--bg);padding:2px;display:flex;align-items:center;justify-content:center}
 .si-av{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;letter-spacing:.5px;font-family:'Nunito',sans-serif}
-.si-nm{font-size:9.5px;color:#333;text-align:center;white-space:nowrap;overflow:hidden;width:56px;text-overflow:ellipsis}
+.si-nm{font-size:9.5px;color:var(--txt2);text-align:center;white-space:nowrap;overflow:hidden;width:56px;text-overflow:ellipsis}
 
 /* TAB BAR */
-.tab-bar{display:flex;background:#fff;border-bottom:1px solid #f0f0f0;flex-shrink:0}
-.tb{flex:1;padding:8px 0;text-align:center;font-size:12px;font-weight:600;color:#aaa;border-bottom:2px solid transparent;cursor:pointer}
-.tb.on{color:#075e54;border-bottom-color:#075e54}
+.tab-bar{display:flex;background:var(--bg);border-bottom:1px solid var(--bdr);flex-shrink:0}
+.tb{flex:1;padding:8px 0;text-align:center;font-size:12px;font-weight:600;color:var(--tb-off);border-bottom:2px solid transparent;cursor:pointer}
+.tb.on{color:var(--tab-on);border-bottom-color:var(--tab-on)}
 
-/* ── CHAT LIST ──
-   Ring ratio matching Instagram: ~3px gradient + ~3px white gap
-   For 48px avatar → wrapper 56px, ring 3px, gap 2px */
-.cl{flex:1;overflow-y:auto;background:#fff}
-.ci{display:flex;align-items:center;padding:9px 14px;gap:11px;border-bottom:.5px solid #f5f5f5;cursor:pointer}
-.ci:active{background:#f5f5f5}
-/* Outer ring wrapper */
+/* STREAK BAR */
+.sk-bar{background:var(--sk-bg);border-bottom:.5px solid var(--sk-bdr);padding:7px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.sk-num{font-size:13px;font-weight:700;color:var(--sk-txt)}
+.sk-best{font-size:10px;color:var(--sk-best);margin-top:1px}
+
+/* LEADERBOARD PINNED */
+.lb-pin{background:var(--lb-bg);border-left:3px solid var(--lb-acc);border-radius:0;padding:6px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;cursor:pointer;border-bottom:.5px solid var(--lb-bdr)}
+.lb-pin span{font-size:11.5px;color:var(--lb-txt);font-weight:700}
+
+/* CHAT LIST */
+.cl{flex:1;overflow-y:auto;background:var(--bg)}
+.ci{display:flex;align-items:center;padding:9px 14px;gap:11px;border-bottom:.5px solid var(--bdr);cursor:pointer}
+.ci:active{background:var(--ci-act)}
 .ci-ring{width:56px;height:56px;border-radius:50%;padding:3px;flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
 .ci-ring.active{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
 .ci-ring.seen{background:#ccc}
 .ci-ring.none{background:transparent;padding:4px}
-/* White gap ring */
-.ci-gap{width:100%;height:100%;border-radius:50%;background:#fff;padding:2px;display:flex;align-items:center;justify-content:center}
-/* Avatar — solid colour circle with capital letter */
+.ci-gap{width:100%;height:100%;border-radius:50%;background:var(--bg);padding:2px;display:flex;align-items:center;justify-content:center}
 .ci-av{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#fff;letter-spacing:.5px;font-family:'Nunito',sans-serif;position:relative;flex-direction:column;gap:0}
-/* Streak badge */
-.ci-sk{position:absolute;bottom:-2px;right:-2px;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;font-size:8.5px;padding:1px 5px;line-height:14px;box-shadow:0 1px 3px rgba(0,0,0,.15);z-index:2;font-weight:700;color:#ea580c;white-space:nowrap}
+.ci-sk{position:absolute;bottom:-2px;right:-2px;background:var(--sk-bg);border:1px solid var(--sk-bdr);border-radius:10px;font-size:8.5px;padding:1px 5px;line-height:14px;z-index:2;font-weight:700;color:var(--sk-txt);white-space:nowrap}
 .ci-body{flex:1;min-width:0}
 .ci-r1{display:flex;justify-content:space-between;align-items:center}
-.ci-nm{font-size:15px;font-weight:600;color:#111}
-.ci-t{font-size:11px;color:#8696a0}
-.ci-t.g{color:#075e54;font-weight:600}
+.ci-nm{font-size:15px;font-weight:600;color:var(--ci-nm)}
+.ci-t{font-size:11px;color:var(--txt3)}
+.ci-t.g{color:var(--tab-on);font-weight:600}
 .ci-r2{display:flex;justify-content:space-between;align-items:center;margin-top:2px}
-.ci-pv{font-size:13px;color:#667781;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:210px}
-.bdg{background:#25d366;color:#fff;border-radius:10px;font-size:11px;font-weight:700;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;padding:0 5px;flex-shrink:0}
-
-/* STREAK BAR */
-.sk-bar{background:#fff7ed;border-bottom:.5px solid #fed7aa;padding:7px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.sk-num{font-size:13px;font-weight:700;color:#ea580c}
-.sk-best{font-size:10px;color:#9a3412;margin-top:1px}
-
-/* PINNED */
-.pinned{background:#f0fdf4;border-left:3px solid #25d366;padding:6px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;cursor:pointer}
-.pinned span{font-size:11.5px;color:#075e54;font-weight:500}
+.ci-pv{font-size:13px;color:var(--txt2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:210px}
+.bdg{background:var(--badge);color:var(--badge-txt);border-radius:10px;font-size:11px;font-weight:700;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;padding:0 5px;flex-shrink:0}
 
 /* MSGS */
-.msgs{flex:1;overflow-y:auto;background:#efeae2;background-image:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4ccc0' fill-opacity='0.18'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z'/%3E%3C/g%3E%3C/svg%3E");padding:10px 12px;display:flex;flex-direction:column;gap:5px}
+.msgs{flex:1;overflow-y:auto;background:var(--bg-chat);background-image:var(--chat-pattern);padding:10px 12px;display:flex;flex-direction:column;gap:5px}
 .bbl{max-width:82%;padding:7px 10px 5px;border-radius:8px;font-size:13.5px;line-height:1.45;word-break:break-word}
-.in{background:#fff;border-radius:0 8px 8px 8px;align-self:flex-start;box-shadow:0 1px 1px rgba(0,0,0,.08)}
-.bt{font-size:10px;color:#8696a0;text-align:right;margin-top:3px}
-.dv{text-align:center;font-size:11px;color:#667781;background:rgba(225,221,214,.9);padding:3px 10px;border-radius:6px;align-self:center}
+.in{background:var(--msg-in);color:var(--txt);border-radius:0 8px 8px 8px;align-self:flex-start;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.bt{font-size:10px;color:var(--txt3);text-align:right;margin-top:3px}
+.dv{text-align:center;font-size:11px;color:var(--txt2);background:rgba(225,221,214,.9);padding:3px 10px;border-radius:6px;align-self:center}
+body.dark .dv{background:rgba(30,37,48,.9)}
 
-/* MENU PILLS */
+/* PILLS */
 .pill-menu{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start;margin-top:4px;max-width:94%}
-.pill{background:#fff;border:1.5px solid #d0e8d0;border-radius:20px;padding:7px 13px;font-size:12.5px;color:#075e54;font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.05)}
-.pill:active{background:#f0fdf4}
+.pill{background:var(--pill-bg);border:1.5px solid var(--pill-bdr);border-radius:20px;padding:7px 13px;font-size:12.5px;color:var(--pill-txt);font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.pill:active{background:var(--pill-act)}
 
-/* STUDY CARD */
-.study-card{background:linear-gradient(135deg,#075e54,#128c7e);border-radius:14px;padding:14px;margin:6px 0;align-self:flex-start;max-width:90%;box-shadow:0 4px 16px rgba(7,94,84,.25)}
+/* STUDY CARD / FACT CARD */
+.study-card{background:linear-gradient(135deg,#2C3E7A,#1a2f6b);border-radius:14px;padding:14px;margin:6px 0;align-self:flex-start;max-width:92%;box-shadow:0 4px 16px rgba(44,62,122,.3)}
 .sc-tag{font-size:9px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:1px;margin-bottom:6px;text-transform:uppercase}
 .sc-fact{font-size:13px;color:#fff;line-height:1.55;font-weight:500}
-.sc-src{font-size:10px;color:rgba(255,255,255,.6);margin-top:6px}
+.sc-src{font-size:10px;color:rgba(255,255,255,.55);margin-top:6px}
+.sc-share{margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.15);display:flex;align-items:center;gap:6px;cursor:pointer}
+.sc-share span{font-size:11px;color:rgba(255,255,255,.8);font-weight:600}
 
 /* INPUT */
-.inp{background:#f0f0f0;padding:6px 10px;display:flex;align-items:center;gap:7px;flex-shrink:0}
-.ibox{flex:1;background:#fff;border-radius:22px;padding:9px 14px;font-size:13.5px;color:#aaa;border:none;outline:none}
-.sbtn{width:40px;height:40px;background:#075e54;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;cursor:pointer;flex-shrink:0}
+.inp{background:var(--bg3);padding:6px 10px;display:flex;align-items:center;gap:7px;flex-shrink:0}
+.ibox{flex:1;background:var(--ibox);border-radius:22px;padding:9px 14px;font-size:13.5px;color:var(--txt3);border:none;outline:none}
+.sbtn{width:40px;height:40px;background:var(--hd);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;cursor:pointer;flex-shrink:0}
 
-/* SECTION HEADER */
-.sec-hd{padding:6px 14px 4px;font-size:10px;font-weight:700;color:#8696a0;letter-spacing:.8px;background:#f8fafc;border-bottom:.5px solid #f0f0f0;flex-shrink:0}
+/* SEC HEADER */
+.sec-hd{padding:6px 14px 4px;font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;background:var(--sec-hd);border-bottom:.5px solid var(--bdr);flex-shrink:0}
 
 /* CHAPTER/TOPIC LIST */
-.sc-list{flex:1;overflow-y:auto;background:#fff}
-.chitem{display:flex;align-items:center;padding:11px 14px;border-bottom:.5px solid #f0f0f0;cursor:pointer;gap:11px}
-.chitem:active{background:#f5f5f5}
-.ch-num{width:30px;height:30px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#075e54;flex-shrink:0}
-.ch-nm{font-size:13.5px;font-weight:500;color:#111;flex:1;line-height:1.3}
+.sc-list{flex:1;overflow-y:auto;background:var(--bg)}
+.chitem{display:flex;align-items:center;padding:11px 14px;border-bottom:.5px solid var(--bdr);cursor:pointer;gap:11px}
+.chitem:active{background:var(--ci-act)}
+.ch-num{width:30px;height:30px;border-radius:50%;background:var(--yr-bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--yr-txt);flex-shrink:0}
+.ch-nm{font-size:13.5px;font-weight:500;color:var(--txt);flex:1;line-height:1.3}
 .ch-pct{font-size:10px;font-weight:600;color:#25d366}
-.ch-arr{color:#ccc;font-size:16px}
-.tpitem{display:flex;align-items:center;padding:10px 14px 10px 18px;border-bottom:.5px solid #f0f0f0;cursor:pointer;gap:9px}
-.tpitem:active{background:#f5f5f5}
-.tp-id{font-size:11px;font-weight:700;color:#075e54;min-width:28px}
-.tp-nm{font-size:13px;color:#111;flex:1}
+.ch-arr{color:var(--txt4);font-size:16px}
+.tpitem{display:flex;align-items:center;padding:10px 14px 10px 18px;border-bottom:.5px solid var(--bdr);cursor:pointer;gap:9px}
+.tpitem:active{background:var(--ci-act)}
+.tp-id{font-size:11px;font-weight:700;color:var(--tab-on);min-width:28px}
+.tp-nm{font-size:13px;color:var(--txt);flex:1}
 .tp-ok{font-size:12px;color:#4caf50}
 
 /* TABS */
-.tabs{display:flex;background:#fff;border-bottom:1px solid #f0f0f0;flex-shrink:0}
-.tab{flex:1;padding:9px 0;text-align:center;font-size:11px;font-weight:600;color:#aaa;border-bottom:2px solid transparent;cursor:pointer;transition:all .15s}
-.tab.on{color:#075e54;border-bottom-color:#075e54}
+.tabs{display:flex;background:var(--bg);border-bottom:1px solid var(--bdr);flex-shrink:0}
+.tab{flex:1;padding:9px 0;text-align:center;font-size:11px;font-weight:600;color:var(--tb-off);border-bottom:2px solid transparent;cursor:pointer;transition:all .15s}
+.tab.on{color:var(--tab-on);border-bottom-color:var(--tab-on)}
 
 /* DOC */
-.doc-body{flex:1;overflow-y:auto;padding:14px;background:#fff}
-.doc-h1{font-size:15px;font-weight:700;color:#111;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #f0f0f0}
-.doc-h2{font-size:11px;font-weight:700;color:#075e54;margin:11px 0 4px;letter-spacing:.4px;text-transform:uppercase}
-.doc-p{font-size:12.5px;color:#333;line-height:1.7;margin-bottom:6px}
+.doc-body{flex:1;overflow-y:auto;padding:14px;background:var(--doc-bg)}
+.doc-h1{font-size:15px;font-weight:700;color:var(--txt);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--bdr)}
+.doc-h2{font-size:11px;font-weight:700;color:var(--tab-on);margin:11px 0 4px;letter-spacing:.4px;text-transform:uppercase}
+.doc-p{font-size:12.5px;color:var(--doc-txt);line-height:1.7;margin-bottom:6px}
 .doc-f{background:#1a1a2e;color:#a78bfa;font-family:'Courier New',monospace;font-size:13px;padding:8px 12px;border-radius:8px;margin:7px 0;text-align:center}
 .doc-f small{font-size:9.5px;color:rgba(255,255,255,.35);display:block;font-family:-apple-system,sans-serif;margin-top:3px}
-.doc-kp{display:flex;gap:7px;font-size:12.5px;color:#333;line-height:1.55;margin:3px 0}
-.doc-kp::before{content:"•";color:#075e54;font-weight:700;flex-shrink:0;margin-top:2px}
-.doc-ft{padding:8px 10px;display:flex;gap:8px;flex-shrink:0;background:#fff;border-top:.5px solid #f0f0f0}
-.df-p{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;background:#075e54;color:#fff;border:none;font-family:inherit}
-.df-s{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;background:#fff;color:#075e54;border:1px solid #075e54;font-family:inherit}
+.doc-kp{display:flex;gap:7px;font-size:12.5px;color:var(--doc-txt);line-height:1.55;margin:3px 0}
+.doc-kp::before{content:"•";color:var(--tab-on);font-weight:700;flex-shrink:0;margin-top:2px}
+.doc-ft{padding:8px 10px;display:flex;gap:8px;flex-shrink:0;background:var(--bg);border-top:.5px solid var(--bdr)}
+.df-p{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;background:var(--hd);color:#fff;border:none;font-family:inherit}
+.df-s{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;background:var(--bg);color:var(--tab-on);border:1px solid var(--tab-on);font-family:inherit}
 
 /* MCQ */
-.mcq{background:#fff;border-radius:0 10px 10px 10px;align-self:flex-start;max-width:92%;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
-.mcq-lbl{font-size:9.5px;font-weight:700;color:#075e54;letter-spacing:.5px;margin-bottom:5px;display:flex;justify-content:space-between}
-.mcq-q{font-size:13px;color:#111;line-height:1.5;margin-bottom:8px}
+.mcq{background:var(--msg-in);border-radius:0 10px 10px 10px;align-self:flex-start;max-width:92%;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.mcq-lbl{font-size:9.5px;font-weight:700;color:var(--tab-on);letter-spacing:.5px;margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq-q{font-size:13px;color:var(--txt);line-height:1.5;margin-bottom:8px}
 .mcq-opts{display:flex;flex-direction:column;gap:5px}
-.mop{border:1px solid #e8e8e8;border-radius:7px;padding:7px 10px;font-size:12.5px;color:#333;cursor:pointer;transition:all .1s}
-.mop:active{background:#f5f5f5}
+.mop{border:1px solid var(--bdr2);border-radius:7px;padding:7px 10px;font-size:12.5px;color:var(--txt);cursor:pointer;transition:all .1s}
+.mop:active{background:var(--ci-act)}
 .mop.ok{background:#e8f5e9;border-color:#4caf50;color:#2e7d32}
 .mop.no{background:#ffebee;border-color:#ef5350;color:#c62828}
 .qr-btns{display:flex;flex-direction:column;gap:5px;align-self:flex-start;width:80%;margin-top:3px}
-.qrb{background:#fff;border:1px solid #d0e8d0;border-radius:8px;padding:8px 12px;font-size:13px;color:#075e54;font-weight:500;cursor:pointer;text-align:center}
-.qrb:active{background:#f0fdf4}
-.qrb.pri{background:#075e54;color:#fff;border-color:#075e54}
+.qrb{background:var(--bg);border:1px solid var(--pill-bdr);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--tab-on);font-weight:500;cursor:pointer;text-align:center}
+.qrb:active{background:var(--pill-act)}
+.qrb.pri{background:var(--hd);color:#fff;border-color:var(--hd)}
 
 /* RESULT */
-.res-card{background:#fff;border-radius:0 10px 10px 10px;align-self:flex-start;max-width:86%;padding:12px 14px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
-.res-big{font-size:30px;font-weight:700;color:#075e54;text-align:center}
-.res-row{display:flex;justify-content:space-around;margin-top:8px;padding-top:8px;border-top:1px solid #f5f5f5}
-.res-st{text-align:center;font-size:11px;color:#8696a0}
+.res-card{background:var(--msg-in);border-radius:0 10px 10px 10px;align-self:flex-start;max-width:86%;padding:12px 14px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.res-big{font-size:30px;font-weight:700;color:var(--tab-on);text-align:center}
+.res-row{display:flex;justify-content:space-around;margin-top:8px;padding-top:8px;border-top:1px solid var(--bdr)}
+.res-st{text-align:center;font-size:11px;color:var(--txt3)}
 .res-v{font-size:14px;font-weight:700}
-.weak-card{background:#fff;border-left:3px solid #ef5350;border-radius:0 8px 8px 8px;align-self:flex-start;max-width:88%;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.08);margin-top:2px}
+.weak-card{background:var(--weak-bg);border-left:3px solid #ef5350;border-radius:0 8px 8px 8px;align-self:flex-start;max-width:88%;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.08);margin-top:2px}
 
 /* PYQ */
-.pyq-item{padding:10px 14px;border-bottom:.5px solid #f0f0f0}
-.pyq-meta{font-size:10px;font-weight:700;color:#075e54;margin-bottom:4px}
-.pyq-q{font-size:13px;color:#111;line-height:1.5}
-.pyq-ans{display:none;font-size:12.5px;color:#333;line-height:1.6;margin-top:7px;padding:8px;background:#f0fdf4;border-radius:6px;border-left:3px solid #4caf50}
-.see-ans{color:#075e54;font-size:11px;font-weight:600;cursor:pointer;margin-top:5px;display:inline-block}
+.pyq-item{padding:10px 14px;border-bottom:.5px solid var(--bdr)}
+.pyq-meta{font-size:10px;font-weight:700;color:var(--tab-on);margin-bottom:4px}
+.pyq-q{font-size:13px;color:var(--txt);line-height:1.5}
+.pyq-ans{display:none;font-size:12.5px;color:var(--doc-txt);line-height:1.6;margin-top:7px;padding:8px;background:var(--lb-bg);border-radius:6px;border-left:3px solid #4caf50}
+.see-ans{color:var(--tab-on);font-size:11px;font-weight:600;cursor:pointer;margin-top:5px;display:inline-block}
 
 /* STATUS */
-.st-row{padding:9px 14px;border-bottom:.5px solid #f0f0f0}
-.st-cn{font-size:13px;font-weight:600;color:#111;margin-bottom:6px}
+.st-row{padding:9px 14px;border-bottom:.5px solid var(--bdr)}
+.st-cn{font-size:13px;font-weight:600;color:var(--txt);margin-bottom:6px}
 .st-tabs{display:flex;gap:6px}
-.st-tab{flex:1;border:1px solid #e0e0e0;border-radius:8px;padding:6px 8px;cursor:pointer;background:#fff}
-.st-tab:active{background:#f0fdf4}
-.st-lbl{font-size:9.5px;color:#8696a0;margin-bottom:3px}
-.st-bar{height:3px;background:#f0f0f0;border-radius:2px;overflow:hidden;margin-bottom:2px}
+.st-tab{flex:1;border:1px solid var(--bdr2);border-radius:8px;padding:6px 8px;cursor:pointer;background:var(--bg)}
+.st-tab:active{background:var(--pill-act)}
+.st-lbl{font-size:9.5px;color:var(--txt3);margin-bottom:3px}
+.st-bar{height:3px;background:var(--bdr2);border-radius:2px;overflow:hidden;margin-bottom:2px}
 .st-fill{height:100%;background:#2196f3;border-radius:2px}
 .st-pct{font-size:10px;font-weight:600;color:#2196f3}
 
 /* YEAR LIST */
-.yr-item{display:flex;align-items:center;padding:11px 14px;border-bottom:.5px solid #f0f0f0;cursor:pointer;gap:11px}
-.yr-item:active{background:#f5f5f5}
-.yr-num{width:44px;height:44px;border-radius:8px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#075e54;flex-shrink:0}
+.yr-item{display:flex;align-items:center;padding:11px 14px;border-bottom:.5px solid var(--bdr);cursor:pointer;gap:11px}
+.yr-item:active{background:var(--ci-act)}
+.yr-num{width:44px;height:44px;border-radius:8px;background:var(--yr-bg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--yr-txt);flex-shrink:0}
 .yr-info{flex:1}
-.yr-t{font-size:13.5px;font-weight:600;color:#111}
-.yr-s{font-size:11px;color:#8696a0;margin-top:1px}
+.yr-t{font-size:13.5px;font-weight:600;color:var(--txt)}
+.yr-s{font-size:11px;color:var(--txt3);margin-top:1px}
 
-/* LEADERBOARD */
-.lb-row{display:flex;align-items:center;padding:8px 14px;gap:10px;border-bottom:.5px solid #f5f5f5}
-.lb-rk{width:22px;font-size:12px;font-weight:700;color:#8696a0;text-align:center;flex-shrink:0}
+/* LEADERBOARD SCREEN */
+.lb-row{display:flex;align-items:center;padding:8px 14px;gap:10px;border-bottom:.5px solid var(--bdr)}
+.lb-rk{width:22px;font-size:12px;font-weight:700;color:var(--txt3);text-align:center;flex-shrink:0}
 .lb-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0;font-family:'Nunito',sans-serif;letter-spacing:.5px}
-.lb-nm{flex:1;font-size:13px;color:#111}
-.lb-nm.me{color:#075e54;font-weight:700}
-.lb-sc{font-size:12px;color:#8696a0}
+.lb-nm{flex:1;font-size:13px;color:var(--txt)}
+.lb-nm.me{color:var(--tab-on);font-weight:700}
+.lb-sc{font-size:12px;color:var(--txt3)}
 
 /* INFO PANEL */
-.info-panel{position:absolute;top:0;left:0;width:100%;height:100%;background:#f0f2f0;z-index:20;display:none;flex-direction:column}
+.info-panel{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--info-bg);z-index:20;display:none;flex-direction:column}
 .info-panel.on{display:flex}
-.ip-hd{background:#075e54;padding:8px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ip-hd{background:var(--hd);padding:8px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0}
 .ip-hd-bk{color:#fff;font-size:22px;cursor:pointer}
 .ip-hd-nm{color:#fff;font-size:15px;font-weight:600}
-.ip-cover{background:linear-gradient(135deg,#075e54,#128c7e);padding:14px;display:flex;align-items:flex-end;gap:12px;flex-shrink:0}
+.ip-cover{background:linear-gradient(135deg,var(--ip-cover-a),var(--ip-cover-b));padding:14px;display:flex;align-items:flex-end;gap:12px;flex-shrink:0}
 .ip-av{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#fff;font-family:'Nunito',sans-serif;letter-spacing:.5px}
 .ip-info{color:#fff}
 .ip-nm{font-size:17px;font-weight:700}
 .ip-sub{font-size:11px;opacity:.8;margin-top:2px}
 .ip-body{flex:1;overflow-y:auto}
-.ip-sec{background:#fff;margin:8px 0;padding:10px 14px}
-.ip-sec-t{font-size:10px;font-weight:700;color:#8696a0;letter-spacing:.8px;margin-bottom:8px}
-.ip-row{display:flex;align-items:center;padding:8px 0;gap:11px;border-bottom:.5px solid #f5f5f5;cursor:pointer}
+.ip-sec{background:var(--bg);margin:8px 0;padding:10px 14px}
+.ip-sec-t{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;margin-bottom:8px}
+.ip-row{display:flex;align-items:center;padding:8px 0;gap:11px;border-bottom:.5px solid var(--bdr);cursor:pointer}
 .ip-row:last-child{border:none}
-.ip-row:active{background:#f8f8f8}
+.ip-row:active{background:var(--ci-act)}
 .ip-row-ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.ip-row-nm{font-size:13.5px;color:#111;flex:1}
-.ip-row-val{font-size:12px;color:#8696a0}
-.tc{background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:8px;border:1px solid #e8f5e9}
+.ip-row-nm{font-size:13.5px;color:var(--txt);flex:1}
+.ip-row-val{font-size:12px;color:var(--txt3)}
+.tc{background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--bdr)}
 .tc-top{display:flex;gap:10px;align-items:center}
 .tc-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#fff;flex-shrink:0;font-family:'Nunito',sans-serif;letter-spacing:.5px}
-.tc-nm{font-size:13px;font-weight:700;color:#111}
-.tc-school{font-size:10.5px;color:#075e54;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc-nm{font-size:13px;font-weight:700;color:var(--txt)}
+.tc-school{font-size:10.5px;color:var(--tab-on);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tc-bdg{color:#fff;border-radius:4px;font-size:8.5px;padding:1px 5px;font-weight:700;margin-left:4px;vertical-align:middle}
-.tc-stats{display:flex;margin-top:7px;padding-top:7px;border-top:.5px solid #f0f0f0}
+.tc-stats{display:flex;margin-top:7px;padding-top:7px;border-top:.5px solid var(--bdr)}
 .tc-stat{flex:1;text-align:center}
-.tc-stat-v{font-size:12px;font-weight:700;color:#075e54}
-.tc-stat-l{font-size:9px;color:#aaa;margin-top:1px}
-.tc-chs{font-size:10px;color:#667781;margin-top:5px;padding-top:5px;border-top:.5px solid #f0f0f0}
+.tc-stat-v{font-size:12px;font-weight:700;color:var(--tab-on)}
+.tc-stat-l{font-size:9px;color:var(--txt4);margin-top:1px}
+.tc-chs{font-size:10px;color:var(--txt2);margin-top:5px;padding-top:5px;border-top:.5px solid var(--bdr)}
+
+/* SETTINGS PANEL */
+.settings-panel{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--settings-bg);z-index:30;display:none;flex-direction:column}
+.settings-panel.on{display:flex}
+.set-hd{background:var(--hd);padding:8px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.set-hd-bk{color:#fff;font-size:22px;cursor:pointer}
+.set-hd-nm{color:#fff;font-size:15px;font-weight:600}
+.set-body{flex:1;overflow-y:auto}
+.set-sec{background:var(--bg);margin:8px 0;padding:0 14px}
+.set-sec-t{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;padding:10px 0 6px;border-bottom:.5px solid var(--bdr)}
+.set-row{display:flex;align-items:center;padding:12px 0;border-bottom:.5px solid var(--bdr);gap:12px}
+.set-row:last-child{border:none}
+.set-row-ic{font-size:18px;flex-shrink:0}
+.set-row-info{flex:1}
+.set-row-nm{font-size:13.5px;color:var(--txt);font-weight:500}
+.set-row-sub{font-size:11px;color:var(--txt3);margin-top:2px}
+.toggle{width:44px;height:24px;border-radius:12px;background:#ddd;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}
+.toggle.on{background:var(--hd)}
+.toggle::after{content:'';width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on::after{left:22px}
 
 /* STORY OVERLAY */
 .story-ov{position:absolute;top:0;left:0;width:100%;height:100%;z-index:50;display:none;flex-direction:column}
 .story-ov.on{display:flex}
-.story-bg{flex:1;background:linear-gradient(160deg,#0a3d2e,#075e54);display:flex;flex-direction:column}
+.story-bg{flex:1;background:linear-gradient(160deg,var(--story-a),var(--story-b));display:flex;flex-direction:column}
 .story-bars{display:flex;gap:4px;padding:10px 12px 0;flex-shrink:0}
 .s-bar{flex:1;height:2px;background:rgba(255,255,255,.3);border-radius:1px;overflow:hidden}
 .s-bar-fill{height:100%;background:#fff;transition:width 5s linear}
@@ -253,26 +302,139 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
 .story-res-txt{font-size:15px;font-weight:700;color:#fff;margin-bottom:3px}
 .story-res-sub{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:14px}
 .story-res-cta{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);border-radius:10px;padding:9px;text-align:center;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+/* Fact card in story */
+.story-fact-card{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);border-radius:16px;padding:16px}
+.story-fact-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+.story-fact-txt{font-size:15px;font-weight:700;color:#fff;line-height:1.5;margin-bottom:12px}
+.story-fact-src{font-size:10px;color:rgba(255,255,255,.5)}
+.story-share{margin-top:14px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);border-radius:10px;padding:9px;text-align:center;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
 
 /* TOAST */
 #toast{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:8px 16px;border-radius:20px;font-size:12px;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99}
+
+/* BOOK READER */
+.book-reader{display:none;flex-direction:column;position:absolute;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:40}
+.book-reader.on{display:flex}
+.br-hd{background:var(--hd);padding:7px 12px 9px;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.br-hd-bk{color:#fff;font-size:22px;cursor:pointer;padding:2px 4px;line-height:1}
+.br-hd-info{flex:1}
+.br-hd-nm{color:#fff;font-size:14px;font-weight:600}
+.br-hd-sb{color:rgba(255,255,255,.7);font-size:10px;margin-top:1px}
+.br-body{flex:1;overflow-y:auto;padding:0;background:var(--doc-bg)}
+.br-chapter-cover{background:linear-gradient(135deg,var(--hd),var(--ip-cover-b));padding:20px 16px 16px;color:#fff}
+.br-ch-num{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.br-ch-title{font-size:20px;font-weight:800;font-family:'Nunito',sans-serif;margin-bottom:4px}
+.br-ch-pages{font-size:10px;color:rgba(255,255,255,.55)}
+.br-toc{background:var(--bg);border-bottom:1px solid var(--bdr);padding:10px 14px}
+.br-toc-t{font-size:9px;font-weight:700;color:var(--txt3);letter-spacing:.8px;margin-bottom:7px;text-transform:uppercase}
+.br-toc-item{display:flex;align-items:center;padding:5px 0;border-bottom:.5px solid var(--bdr);cursor:pointer;gap:8px}
+.br-toc-item:last-child{border:none}
+.br-toc-num{font-size:10px;font-weight:700;color:var(--tab-on);min-width:28px}
+.br-toc-nm{font-size:12.5px;color:var(--txt);flex:1}
+.br-toc-pg{font-size:10px;color:var(--txt3)}
+.br-section{padding:14px 16px;border-bottom:1px solid var(--bdr)}
+.br-sec-anchor{display:block;height:0;margin-top:-1px}
+.br-sec-num{font-size:9px;font-weight:700;color:var(--tab-on);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.br-sec-title{font-size:16px;font-weight:700;color:var(--txt);margin-bottom:10px;font-family:'Nunito',sans-serif}
+.br-p{font-size:13px;color:var(--doc-txt);line-height:1.75;margin-bottom:10px}
+.br-h2{font-size:11px;font-weight:700;color:var(--tab-on);letter-spacing:.5px;text-transform:uppercase;margin:12px 0 6px}
+.br-formula{background:#1a1a2e;color:#a78bfa;font-family:'Courier New',monospace;font-size:13px;padding:10px 14px;border-radius:10px;margin:8px 0;text-align:center;border-left:3px solid #7c3aed}
+.br-formula small{font-size:9px;color:rgba(255,255,255,.4);display:block;font-family:-apple-system,sans-serif;margin-top:3px}
+.br-kp{display:flex;gap:8px;font-size:12.5px;color:var(--doc-txt);line-height:1.6;margin:4px 0;padding:4px 0}
+.br-kp::before{content:"▸";color:var(--tab-on);font-weight:700;flex-shrink:0;margin-top:1px}
+.br-diagram{background:var(--bg3);border:1px dashed var(--bdr2);border-radius:10px;padding:14px;margin:10px 0;text-align:center}
+.br-diagram-lbl{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.br-diagram-desc{font-size:11.5px;color:var(--txt2);line-height:1.55;font-style:italic}
+.br-example{background:var(--yr-bg);border-left:3px solid var(--tab-on);border-radius:0 8px 8px 0;padding:10px 12px;margin:10px 0}
+.br-ex-lbl{font-size:9px;font-weight:700;color:var(--yr-txt);letter-spacing:.8px;text-transform:uppercase;margin-bottom:5px}
+.br-ex-txt{font-size:12.5px;color:var(--txt);line-height:1.6}
+.br-coming{padding:24px 16px;text-align:center}
+.br-coming-ic{font-size:32px;margin-bottom:10px}
+.br-coming-t{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:5px}
+.br-coming-s{font-size:12px;color:var(--txt3);line-height:1.5}
 </style>
 </head>
-<body>
+<body class="light">
 <div class="phone">
+
+<!-- ═══ ONBOARDING ══════════════════════════════════════ -->
+<div class="ob" id="onboarding">
+  <div class="ob-top">
+    <div class="ob-logo">ArKIT</div>
+    <div class="ob-sub">Your AI Study Buddy · TN Samacheer Kalvi</div>
+
+    <!-- Step 1: Phone -->
+    <div class="ob-step on" id="ob-s1">
+      <div class="ob-label">Enter your mobile number</div>
+      <input class="ob-input" type="tel" placeholder="+91 98765 43210" id="ob-phone" maxlength="15">
+      <div class="ob-btn" onclick="obNext(2)">Continue</div>
+      <div class="ob-dots"><div class="ob-dot on"></div><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div></div>
+    </div>
+
+    <!-- Step 2: Name -->
+    <div class="ob-step" id="ob-s2">
+      <div class="ob-label">What's your name?</div>
+      <input class="ob-input" type="text" placeholder="Your name" id="ob-name">
+      <div class="ob-btn" onclick="obNext(3)">Continue</div>
+      <div class="ob-dots"><div class="ob-dot on"></div><div class="ob-dot on"></div><div class="ob-dot"></div><div class="ob-dot"></div></div>
+    </div>
+
+    <!-- Step 3: Class -->
+    <div class="ob-step" id="ob-s3">
+      <div class="ob-label">Which class are you in?</div>
+      <select class="ob-select" id="ob-class">
+        <option value="">Select your class</option>
+        <option value="6">Class 6</option>
+        <option value="7">Class 7</option>
+        <option value="8">Class 8</option>
+        <option value="9">Class 9</option>
+        <option value="10">Class 10</option>
+        <option value="11">Class 11</option>
+        <option value="12" selected>Class 12</option>
+      </select>
+      <div class="ob-label" style="margin-top:4px">Medium</div>
+      <select class="ob-select" id="ob-medium">
+        <option value="en" selected>English Medium</option>
+        <option value="ta">Tamil Medium</option>
+      </select>
+      <div class="ob-btn" onclick="obNext(4)">Continue</div>
+      <div class="ob-dots"><div class="ob-dot on"></div><div class="ob-dot on"></div><div class="ob-dot on"></div><div class="ob-dot"></div></div>
+    </div>
+
+    <!-- Step 4: School -->
+    <div class="ob-step" id="ob-s4">
+      <div class="ob-label">Your school name</div>
+      <input class="ob-input" type="text" placeholder="e.g. GHSS Tirupur South" id="ob-school">
+      <div class="ob-label" style="margin-top:4px">District</div>
+      <select class="ob-select" id="ob-district">
+        <option value="tirupur" selected>Tirupur</option>
+        <option value="coimbatore">Coimbatore</option>
+        <option value="madurai">Madurai</option>
+        <option value="chennai">Chennai</option>
+        <option value="salem">Salem</option>
+        <option value="trichy">Trichy</option>
+        <option value="other">Other</option>
+      </select>
+      <div class="ob-btn" onclick="obFinish()">Start Learning</div>
+      <div class="ob-dots"><div class="ob-dot on"></div><div class="ob-dot on"></div><div class="ob-dot on"></div><div class="ob-dot on"></div></div>
+    </div>
+
+    <div class="ob-skip" onclick="obFinish()">Skip for now</div>
+  </div>
+</div>
 
 <!-- ═══ HOME ═══════════════════════════════════════════ -->
 <div class="sc on" id="s-home">
   <div class="hm-hd">
     <span class="hm-hd-t">ArKIT</span>
-    <div class="hm-hd-ic"><span>🔍</span><span>⋮</span></div>
+    <div class="hm-hd-ic">
+      <span class="ic" onclick="toast('Search coming soon!')" style="cursor:pointer"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></span>
+      <span class="ic" onclick="openSettings()" style="cursor:pointer"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+      <span class="ic" style="cursor:pointer"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></span>
+    </div>
   </div>
   <div class="story-row">
-    <div class="si">
-      <div class="si-ring seen"><div class="si-gap"><div class="si-av" style="background:#aaa;font-size:13px">+</div></div></div>
-      <div class="si-nm">My Status</div>
-    </div>
-    <div class="si" onclick="openStory()">
+    <div class="si" onclick="openStory('mcq')">
       <div class="si-ring new"><div class="si-gap"><div class="si-av" style="background:#1565c0">PH</div></div></div>
       <div class="si-nm">Physics</div>
     </div>
@@ -291,14 +453,13 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
   </div>
   <div class="tab-bar">
     <div class="tb on">Chats</div>
-    <div class="tb" onclick="toast('Status coming soon!')">Status</div>
-    <div class="tb" onclick="toast('Calls coming soon!')">Calls</div>
   </div>
   <div class="cl">
-    <div style="background:#f0fdf4;border-left:3px solid #25d366;padding:7px 14px;display:flex;align-items:center;gap:8px;cursor:pointer" onclick="openStory()">
-      <span style="font-size:12px">📌</span>
-      <span style="font-size:11.5px;color:#075e54;font-weight:500;flex:1">Daily Challenge — Physics · Gauss's Law</span>
-      <span style="font-size:13px;color:#25d366">›</span>
+    <!-- LEADERBOARD PIN (replaces daily challenge pin) -->
+    <div class="lb-pin" onclick="go('s-leaderboard')">
+      <span style="font-size:14px">🏆</span>
+      <span style="flex:1">You're #4 in your school this week</span>
+      <span style="font-size:13px">›</span>
     </div>
     <div class="ci" onclick="go('s-physics')">
       <div class="ci-ring active">
@@ -374,11 +535,6 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
     <span style="font-size:18px">🔥</span>
     <div><div class="sk-num">6 Day Streak</div><div class="sk-best">Best: 14 days</div></div>
   </div>
-  <div class="pinned" onclick="openStory()">
-    <span style="font-size:12px">📌</span>
-    <span>Today's Challenge — Gauss's Law · 3 questions</span>
-    <span style="font-size:13px;color:#25d366;margin-left:auto">›</span>
-  </div>
   <div class="msgs" id="msgs-physics">
     <div class="dv">Today</div>
     <div class="bbl in">Hi Imtha! What would you like to do? 👇<div class="bt">9:41</div></div>
@@ -390,7 +546,7 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
       <div class="pill" onclick="go('s-status')">📊 My Progress</div>
     </div>
   </div>
-  <div class="inp"><div class="ibox">Message Physics...</div><div class="sbtn">🎤</div></div>
+  <div class="search-bar"><div class="search-box" onclick="toast('Search coming soon!')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><span>Search topics...</span></div></div>
 </div>
 
 <!-- ═══ PRACTICE MENU ════════════════════════════════════ -->
@@ -423,7 +579,7 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
       </div>
     </div>
   </div>
-  <div class="inp"><div class="ibox">Message Physics...</div><div class="sbtn">🎤</div></div>
+  <div class="search-bar"><div class="search-box" onclick="toast('Search coming soon!')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><span>Search topics...</span></div></div>
 </div>
 
 <!-- ═══ PRACTICE BY CHAPTER ══════════════════════════════ -->
@@ -438,7 +594,7 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
   <div class="sc-list" id="prac-ch-list"></div>
 </div>
 
-<!-- ═══ PRACTICE COUNT (chapter selected) ═══════════════ -->
+<!-- ═══ PRACTICE COUNT ═══════════════════════════════════ -->
 <div class="sc" id="s-practice-sel">
   <div class="sb"><span>9:41</span><span>▐▐ 🔋</span></div>
   <div class="hd">
@@ -455,7 +611,7 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
       <div class="qrb" onclick="startMCQ(30,'ch')">💪 30 MCQs — Full chapter (~22 min)</div>
     </div>
   </div>
-  <div class="inp"><div class="ibox">Message Physics...</div><div class="sbtn">🎤</div></div>
+  <div class="search-bar"><div class="search-box" onclick="toast('Search coming soon!')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><span>Search topics...</span></div></div>
 </div>
 
 <!-- ═══ PRACTICE BY TOPIC — CHAPTER FIRST ══════════════ -->
@@ -482,7 +638,7 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
   <div class="sc-list" id="prac-topic-list"></div>
 </div>
 
-<!-- ═══ PYQ PRACTICE (from Practice menu) ═══════════════ -->
+<!-- ═══ PYQ PRACTICE ═══════════════════════════════════ -->
 <div class="sc" id="s-pyq-practice">
   <div class="sb"><span>9:41</span><span>▐▐ 🔋</span></div>
   <div class="hd">
@@ -502,9 +658,9 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
     <div class="hd-av" style="background:#1565c0;font-weight:600;font-family:'Nunito',sans-serif;font-size:13px;letter-spacing:.5px">PH</div>
     <div class="hd-info"><div class="hd-nm">Practice</div><div class="hd-sb" id="mcq-prog">Q1 · Electrostatics</div></div>
   </div>
-  <div class="sk-bar" style="padding:5px 12px"><span style="font-size:14px">🔥</span><span style="font-size:11px;font-weight:600;color:#ea580c;margin-left:4px">6 Day Streak · Keep going!</span></div>
+  <div class="sk-bar" style="padding:5px 12px"><span style="font-size:14px">🔥</span><span style="font-size:11px;font-weight:600;color:var(--sk-txt);margin-left:4px">6 Day Streak · Keep going!</span></div>
   <div class="msgs" id="mcq-msgs"></div>
-  <div class="inp"><div class="ibox" style="color:#bbb;font-size:12px">Tap an option above</div><div class="sbtn" style="background:#ddd">↑</div></div>
+  <div class="search-bar"><div class="search-box" style="opacity:.5"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><span>Tap an option above</span></div></div>
 </div>
 
 <!-- ═══ RESULT ════════════════════════════════════════ -->
@@ -516,7 +672,7 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
     <div class="hd-info"><div class="hd-nm">Session Complete</div><div class="hd-sb">Physics · Electrostatics</div></div>
   </div>
   <div class="msgs" id="result-msgs"></div>
-  <div class="inp"><div class="ibox">Message Physics...</div><div class="sbtn">🎤</div></div>
+  <div class="search-bar"><div class="search-box" onclick="toast('Search coming soon!')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><span>Search topics...</span></div></div>
 </div>
 
 <!-- ═══ STUDY CHAPTER LIST ══════════════════════════════ -->
@@ -541,9 +697,10 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
   <div class="tabs">
     <div class="tab on" id="tp-tab-s" onclick="tpTab('sum')">Summary</div>
     <div class="tab" id="tp-tab-k" onclick="tpTab('kp')">Key Points</div>
+    <div class="tab" id="tp-tab-b" onclick="tpTab('book')">📖 View in Book</div>
   </div>
   <div class="doc-body" id="tp-body"></div>
-  <div id="yt-row" style="background:#fff;border-top:.5px solid #f0f0f0;padding:8px 12px;display:none;flex-direction:column;gap:5px;flex-shrink:0"></div>
+  <div id="yt-row" style="background:var(--bg);border-top:.5px solid var(--bdr);padding:8px 12px;display:none;flex-direction:column;gap:5px;flex-shrink:0"></div>
   <div class="doc-ft">
     <button class="df-p" id="tp-done-btn" onclick="markTopicDone()">✓ Mark as Done</button>
     <button class="df-s" onclick="go('s-study-ch')">← Back</button>
@@ -570,7 +727,7 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
   <div class="sc-list" id="rv-body"></div>
 </div>
 
-<!-- ═══ PREVIOUS YEAR QUESTION PAPERS (main menu) ══════ -->
+<!-- ═══ PREVIOUS YEAR QUESTION PAPERS ══════ -->
 <div class="sc" id="s-pyq-years">
   <div class="sb"><span>9:41</span><span>▐▐ 🔋</span></div>
   <div class="hd"><div class="hd-bk" onclick="go('s-physics')">‹</div><div class="hd-av">📄</div><div class="hd-info"><div class="hd-nm">Previous Year Question Papers</div><div class="hd-sb">Physics · 2015–2025</div></div></div>
@@ -583,7 +740,6 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
   <div class="sb"><span>9:41</span><span>▐▐ 🔋</span></div>
   <div class="hd"><div class="hd-bk" onclick="go('s-pyq-years')">‹</div><div class="hd-av">📄</div><div class="hd-info"><div class="hd-nm" id="pyq-yr-nm">2023 Paper</div><div class="hd-sb">Physics (Core) · TN Board</div></div></div>
   <div class="sc-list" id="pyq-paper-body"></div>
-  <!-- PYQ paper practice redirects to PYQ practice screen -->
   <div class="doc-ft"><button class="df-p" onclick="go('s-pyq-practice')">🎯 Practice this paper as MCQs</button><button class="df-s" onclick="go('s-pyq-years')">← Years</button></div>
 </div>
 
@@ -598,14 +754,15 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
 <div class="sc" id="s-leaderboard">
   <div class="sb"><span>9:41</span><span>▐▐ 🔋</span></div>
   <div class="hd"><div class="hd-bk" onclick="go('s-home')">‹</div><div class="hd-av" style="font-size:18px">🏆</div><div class="hd-info"><div class="hd-nm">Leaderboard</div><div class="hd-sb">Physics · This Week</div></div></div>
-  <div style="background:#fff7ed;padding:8px 14px;border-bottom:.5px solid #fed7aa;flex-shrink:0"><span style="font-size:11px;color:#ea580c;font-weight:600">Week of March 31 · Coimbatore Area</span></div>
-  <div style="flex:1;overflow-y:auto;background:#fff">
+  <div style="background:var(--sk-bg);padding:8px 14px;border-bottom:.5px solid var(--sk-bdr);flex-shrink:0"><span style="font-size:11px;color:var(--sk-txt);font-weight:600">Week of March 31 · Tirupur District</span></div>
+  <div style="flex:1;overflow-y:auto;background:var(--bg)">
     <div class="lb-row"><div class="lb-rk" style="font-size:16px">🥇</div><div class="lb-av" style="background:#1565c0">KS</div><div class="lb-nm">Karthik S.</div><div class="lb-sc">🔥14 · 980 XP</div></div>
     <div class="lb-row"><div class="lb-rk" style="font-size:16px">🥈</div><div class="lb-av" style="background:#6a1b9a">PR</div><div class="lb-nm">Priya R.</div><div class="lb-sc">🔥12 · 870 XP</div></div>
-    <div class="lb-row" style="background:#f0fdf4"><div class="lb-rk" style="font-size:16px">🥉</div><div class="lb-av" style="background:#2e7d32">IM</div><div class="lb-nm me">Imtha ← You</div><div class="lb-sc">🔥6 · 640 XP</div></div>
-    <div class="lb-row"><div class="lb-rk">4</div><div class="lb-av" style="background:#e65100">AK</div><div class="lb-nm">Aravind K.</div><div class="lb-sc">🔥5 · 580 XP</div></div>
-    <div class="lb-row"><div class="lb-rk">5</div><div class="lb-av" style="background:#37474f">ST</div><div class="lb-nm">Sneha T.</div><div class="lb-sc">🔥3 · 510 XP</div></div>
-    <div style="padding:10px 14px;font-size:11px;color:#8696a0">Resets every Sunday midnight</div>
+    <div class="lb-row"><div class="lb-rk" style="font-size:16px">🥉</div><div class="lb-av" style="background:#2e7d32">AV</div><div class="lb-nm">Aravind V.</div><div class="lb-sc">🔥9 · 720 XP</div></div>
+    <div class="lb-row" style="background:var(--lb-bg)"><div class="lb-rk" style="font-weight:700;color:var(--tab-on)">4</div><div class="lb-av" style="background:#2C3E7A">IM</div><div class="lb-nm me">Imtha ← You</div><div class="lb-sc">🔥6 · 640 XP</div></div>
+    <div class="lb-row"><div class="lb-rk">5</div><div class="lb-av" style="background:#e65100">AK</div><div class="lb-nm">Arun K.</div><div class="lb-sc">🔥5 · 580 XP</div></div>
+    <div class="lb-row"><div class="lb-rk">6</div><div class="lb-av" style="background:#37474f">ST</div><div class="lb-nm">Sneha T.</div><div class="lb-sc">🔥3 · 510 XP</div></div>
+    <div style="padding:10px 14px;font-size:11px;color:var(--txt3)">Resets every Sunday midnight</div>
   </div>
   <div class="doc-ft"><button class="df-p" onclick="go('s-home')">🏠 Home</button><button class="df-s" onclick="go('s-physics')">Physics</button></div>
 </div>
@@ -615,60 +772,310 @@ body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:#111;displ
   <div class="ip-hd"><div class="ip-hd-bk" onclick="hideInfo()">‹</div><div class="ip-hd-nm">Physics</div></div>
   <div class="ip-cover"><div class="ip-av" style="background:#1565c0">PH</div><div class="ip-info"><div class="ip-nm">Physics ✅</div><div class="ip-sub">Class 12 · TN Samacheer Kalvi · 2,400 students</div></div></div>
   <div class="ip-body">
-    <div class="ip-sec" style="background:linear-gradient(135deg,#fff7ed,#fff)">
+    <div class="ip-sec" style="background:linear-gradient(135deg,var(--sk-bg),var(--bg))">
       <div class="ip-sec-t">EXAM COUNTDOWN</div>
       <div style="display:flex;align-items:center;gap:14px">
         <div style="font-size:36px;font-weight:600;color:#ef4444;line-height:1">47</div>
-        <div><div style="font-size:13px;font-weight:700;color:#111">Days to TN Board Exam</div><div style="font-size:11px;color:#aaa;margin-top:2px">Target: 2 topics/day</div></div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--txt)">Days to TN Board Exam</div><div style="font-size:11px;color:var(--txt3);margin-top:2px">Target: 2 topics/day</div></div>
       </div>
     </div>
     <div class="ip-sec">
       <div class="ip-sec-t">QUICK ACCESS</div>
-      <div class="ip-row" onclick="go('s-status');hideInfo()"><div class="ip-row-ic" style="background:#f0fdf4">📊</div><div class="ip-row-nm">My Progress</div><div class="ip-row-val">68% →</div></div>
-      <div class="ip-row" onclick="go('s-leaderboard');hideInfo()"><div class="ip-row-ic" style="background:#fff7ed">🏆</div><div class="ip-row-nm">Leaderboard</div><div class="ip-row-val">Rank #3 →</div></div>
-      <div class="ip-row" onclick="hideInfo();toast('Starred questions coming soon!')"><div class="ip-row-ic" style="background:#fefce8">⭐</div><div class="ip-row-nm">Starred Questions</div><div class="ip-row-val">12 saved</div></div>
-      <div class="ip-row" onclick="hideInfo();toast('Ask the class — coming soon!')"><div class="ip-row-ic" style="background:#eff6ff">💬</div><div class="ip-row-nm">Ask the Class</div><div class="ip-row-val">3 open →</div></div>
-      <div class="ip-row" onclick="hideInfo();toast('Daily reminder is ON!')"><div class="ip-row-ic" style="background:#f0fdf4">🔔</div><div class="ip-row-nm">Daily Reminder</div><div class="ip-row-val" style="color:#25d366">ON</div></div>
+      <div class="ip-row" onclick="go('s-status');hideInfo()"><div class="ip-row-ic" style="background:var(--lb-bg)"><span class="ic" style="color:var(--lb-acc)"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span></div><div class="ip-row-nm">My Progress</div><div class="ip-row-val">68% →</div></div>
+      <div class="ip-row" onclick="go('s-leaderboard');hideInfo()"><div class="ip-row-ic" style="background:var(--sk-bg)"><span class="ic" style="color:var(--sk-txt)"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 0 1 0 5H18"/><path d="M18 15H6"/><path d="M8 21h8"/><path d="M12 7v14"/></svg></span></div><div class="ip-row-nm">Leaderboard</div><div class="ip-row-val">Rank #4 →</div></div>
+      <div class="ip-row" onclick="hideInfo();toast('Starred questions coming soon!')"><div class="ip-row-ic" style="background:#fefce8"><span class="ic" style="color:#c57d15"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span></div><div class="ip-row-nm">Starred Questions</div><div class="ip-row-val">12 saved</div></div>
+      <div class="ip-row" onclick="hideInfo();toast('Ask the class — coming soon!')"><div class="ip-row-ic" style="background:var(--yr-bg)"><span class="ic" style="color:var(--yr-txt)"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></div><div class="ip-row-nm">Ask the Class</div><div class="ip-row-val">3 open →</div></div>
+      <div class="ip-row" onclick="hideInfo();toast('Daily reminder is ON!')"><div class="ip-row-ic" style="background:var(--lb-bg)"><span class="ic" style="color:var(--lb-acc)"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span></div><div class="ip-row-nm">Daily Reminder</div><div class="ip-row-val" style="color:#25d366">ON</div></div>
     </div>
     <div class="ip-sec"><div class="ip-sec-t">VERIFIED BY TEACHERS (15)</div><div id="teacher-list"></div></div>
   </div>
 </div>
 
-<!-- ═══ STORY OVERLAY ════════════════════════════════ -->
-<div class="story-ov" id="story-ov">
-  <div class="story-bg">
-    <div class="story-bars">
-      <div class="s-bar"><div class="s-bar-fill done"></div></div>
-      <div class="s-bar"><div class="s-bar-fill run"></div></div>
-      <div class="s-bar"><div class="s-bar-fill"></div></div>
-    </div>
-    <div class="story-hd">
-      <div style="width:28px;height:28px;border-radius:50%;background:#1565c0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff">PH</div>
-      <div style="color:#fff;font-size:12px;font-weight:600;margin-left:4px">Physics · Daily Challenge</div>
-      <div class="story-close" onclick="closeStory()">✕</div>
-    </div>
-    <div class="story-body">
-      <div class="story-ql">⚡ Question 2 of 3 · Gauss's Law</div>
-      <div class="story-q">The total electric flux through a closed surface equals the enclosed charge divided by?</div>
-      <div class="story-opts" id="s-opts">
-        <div class="story-opt" onclick="storyAns(this,false)">ε (permittivity of medium)</div>
-        <div class="story-opt" onclick="storyAns(this,false)">k (Coulomb's constant)</div>
-        <div class="story-opt" onclick="storyAns(this,true)">ε₀ (permittivity of free space)</div>
-        <div class="story-opt" onclick="storyAns(this,false)">μ₀ (permeability of free space)</div>
+<!-- ═══ SETTINGS PANEL ════════════════════════════════ -->
+<div class="settings-panel" id="settings-panel">
+  <div class="set-hd">
+    <div class="set-hd-bk" onclick="closeSettings()">‹</div>
+    <div class="set-hd-nm">Settings</div>
+  </div>
+  <div class="set-body">
+    <div class="set-sec">
+      <div class="set-sec-t">APPEARANCE</div>
+      <div class="set-row">
+        <div class="set-row-ic"><span class="ic" style="color:var(--txt2)"><svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span></div>
+        <div class="set-row-info">
+          <div class="set-row-nm">Dark Mode</div>
+          <div class="set-row-sub">Switch to dark theme</div>
+        </div>
+        <div class="toggle" id="dark-toggle" onclick="toggleDark()"></div>
       </div>
-      <div class="story-res" id="s-res">
-        <div class="story-res-txt" id="s-res-txt">✅ Correct! +10 XP</div>
-        <div class="story-res-sub">Φ = Q_enc / ε₀ — Gauss's Law</div>
-        <div class="story-res-cta" onclick="closeStory()">Continue →</div>
+    </div>
+    <div class="set-sec">
+      <div class="set-sec-t">NOTIFICATIONS</div>
+      <div class="set-row">
+        <div class="set-row-ic"><span class="ic" style="color:var(--txt2)"><svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span></div>
+        <div class="set-row-info">
+          <div class="set-row-nm">Daily Reminder</div>
+          <div class="set-row-sub">7:00 PM every day</div>
+        </div>
+        <div class="toggle on" onclick="toast('Reminder settings coming soon!')"></div>
       </div>
+      <div class="set-row">
+        <div class="set-row-ic"><span class="ic" style="color:var(--txt2)"><svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 0 1 0 5H18"/><path d="M18 15H6"/><path d="M8 21h8"/><path d="M12 7v14"/></svg></span></div>
+        <div class="set-row-info">
+          <div class="set-row-nm">Leaderboard Updates</div>
+          <div class="set-row-sub">When your rank changes</div>
+        </div>
+        <div class="toggle on" onclick="toast('Coming soon!')"></div>
+      </div>
+    </div>
+    <div class="set-sec">
+      <div class="set-sec-t">ACCOUNT</div>
+      <div class="set-row">
+        <div class="set-row-ic"><span class="ic" style="color:var(--txt2)"><svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span></div>
+        <div class="set-row-info">
+          <div class="set-row-nm">School</div>
+          <div class="set-row-sub">GHSS Tirupur South</div>
+        </div>
+        <div style="font-size:12px;color:var(--txt3)">Edit</div>
+      </div>
+      <div class="set-row">
+        <div class="set-row-ic"><span class="ic" style="color:var(--txt2)"><svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span></div>
+        <div class="set-row-info">
+          <div class="set-row-nm">Class</div>
+          <div class="set-row-sub">Class 12 · TN Board</div>
+        </div>
+        <div style="font-size:12px;color:var(--txt3)">Edit</div>
+      </div>
+    </div>
+    <div style="padding:14px;text-align:center">
+      <div style="font-size:10px;color:var(--txt4)">ArKIT v8.1 · Made in Tirupur</div>
     </div>
   </div>
 </div>
 
+<!-- ═══ STORY OVERLAY ════════════════════════════════ -->
+<div class="story-ov" id="story-ov">
+  <div class="story-bg" id="story-bg">
+    <div class="story-bars" id="story-bars"></div>
+    <div class="story-hd">
+      <div style="width:28px;height:28px;border-radius:50%;background:#1565c0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff">PH</div>
+      <div style="color:#fff;font-size:12px;font-weight:600;margin-left:4px" id="story-hd-txt">Physics</div>
+      <div class="story-close" onclick="closeStory()">✕</div>
+    </div>
+    <div class="story-body" id="story-body"></div>
+  </div>
+</div>
+
 <div id="toast"></div>
+
+<!-- ═══ BOOK READER ════════════════════════════════════ -->
+<div class="book-reader" id="book-reader">
+  <div class="br-hd">
+    <div class="br-hd-bk" onclick="closeBook()">‹</div>
+    <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;font-family:'Nunito',sans-serif;flex-shrink:0">PH</div>
+    <div class="br-hd-info">
+      <div class="br-hd-nm" id="br-title">Physics Textbook</div>
+      <div class="br-hd-sb" id="br-sub">TN Samacheer Kalvi · Class 12</div>
+    </div>
+  </div>
+  <div class="br-body" id="br-body"></div>
+</div>
+
 </div>
 
 <script>
+// ── BOOK READER DATA ──
+const BOOK_CONTENT={
+  1:{
+    num:'Unit 1',title:'Electrostatics',pages:'Pages 1–47 · Volume 1',
+    intro:'Electrostatics deals with the study of electric charges at rest. The word electricity comes from the Greek word ηλεκτρον (elektron) meaning amber. Ancient Greeks observed that amber, when rubbed with fur, attracted small feathers and bits of paper.',
+    topics:{
+      '1.1':{
+        title:'Frictional Electricity, Electric Charges and their Conservation',
+        content:`<div class="br-h2">Introduction</div>
+<div class="br-p">When two bodies are rubbed together, electrons are transferred from one body to another. The body that loses electrons becomes positively charged and the body that gains electrons becomes negatively charged. This process of charging is called charging by friction.</div>
+<div class="br-h2">Properties of Electric Charges</div>
+<div class="br-kp">There are only two types of charges in nature — positive and negative.</div>
+<div class="br-kp">Like charges repel each other; unlike charges attract each other.</div>
+<div class="br-kp">Electric charge is always conserved — it can neither be created nor destroyed, only transferred from one body to another.</div>
+<div class="br-kp">Electric charge is quantised — the charge on any object is always an integral multiple of the elementary charge e.</div>
+<div class="br-h2">Quantisation of Charge</div>
+<div class="br-p">The charge on any object q is given by:</div>
+<div class="br-formula">q = ne<small>where n is an integer (±1, ±2, ±3,...) and e = 1.6 × 10⁻¹⁹ C</small></div>
+<div class="br-p">The elementary charge e = 1.6 × 10⁻¹⁹ C is the magnitude of charge on one electron or one proton.</div>
+<div class="br-example"><div class="br-ex-lbl">📋 Example 1.1</div><div class="br-ex-txt">How many electrons constitute a charge of 1 coulomb?<br><br>n = q/e = 1 / (1.6 × 10⁻¹⁹) = 6.25 × 10¹⁸ electrons</div></div>
+<div class="br-diagram"><div class="br-diagram-lbl">Fig 1.1 — Charging by Friction</div><div class="br-diagram-desc">When a glass rod is rubbed with silk, electrons transfer from glass to silk. Glass becomes positive (+), silk becomes negative (−).</div></div>`
+      },
+      '1.2':{
+        title:'Coulomb\'s Law',
+        content:`<div class="br-h2">Statement</div>
+<div class="br-p">The electrostatic force between two point charges is directly proportional to the product of the magnitudes of the charges and inversely proportional to the square of the distance between them. The force acts along the line joining the two charges.</div>
+<div class="br-formula">F = k · Q₁Q₂ / r²<small>k = 1/4πε₀ = 9 × 10⁹ N m² C⁻²</small></div>
+<div class="br-p">where ε₀ = 8.854 × 10⁻¹² C² N⁻¹ m⁻² is the permittivity of free space.</div>
+<div class="br-h2">Vector Form</div>
+<div class="br-formula">F₁₂ = k · Q₁Q₂ / r² · r̂₁₂<small>Force on charge 1 due to charge 2</small></div>
+<div class="br-h2">Superposition Principle</div>
+<div class="br-p">The total force on a charge due to a collection of charges is the vector sum of the individual forces due to each charge, calculated as if the other charges were not present.</div>
+<div class="br-formula">F = F₁ + F₂ + F₃ + ...</div>
+<div class="br-example"><div class="br-ex-lbl">📋 Example 1.2</div><div class="br-ex-txt">Two point charges +1 μC and −2 μC are separated by 1 m. Find the force.<br><br>F = (9×10⁹ × 1×10⁻⁶ × 2×10⁻⁶) / 1² = 0.018 N (attractive)</div></div>
+<div class="br-h2">Key Points</div>
+<div class="br-kp">Coulomb's force is a central force — acts along the line joining the charges.</div>
+<div class="br-kp">It is conservative — work done is path independent.</div>
+<div class="br-kp">If distance doubles, force becomes one-fourth (inverse square law).</div>
+<div class="br-kp">Coulomb's law holds for point charges and for spherically symmetric charge distributions.</div>
+<div class="br-diagram"><div class="br-diagram-lbl">Fig 1.2 — Coulomb Force Direction</div><div class="br-diagram-desc">Like charges: force arrows point away from each other (repulsion). Unlike charges: force arrows point toward each other (attraction). Force magnitude equal and opposite — Newton's third law.</div></div>`
+      },
+      '1.3':{
+        title:'Electric Field and Electric Field Lines',
+        content:`<div class="br-h2">Electric Field</div>
+<div class="br-p">The electric field at a point in space is defined as the force experienced by a unit positive test charge placed at that point, without disturbing the source charge distribution.</div>
+<div class="br-formula">E = F / q₀<small>Unit: N C⁻¹ or V m⁻¹</small></div>
+<div class="br-p">Electric field due to a point charge Q at distance r:</div>
+<div class="br-formula">E = kQ / r²<small>Direction: away from +Q, toward −Q</small></div>
+<div class="br-h2">Electric Field Lines</div>
+<div class="br-p">Electric field lines are imaginary lines drawn in an electric field such that the tangent at any point gives the direction of the electric field at that point.</div>
+<div class="br-h2">Properties of Electric Field Lines</div>
+<div class="br-kp">Field lines originate from positive charges and terminate at negative charges.</div>
+<div class="br-kp">Two electric field lines never intersect each other.</div>
+<div class="br-kp">The number of field lines per unit area (line density) is proportional to the magnitude of the electric field.</div>
+<div class="br-kp">Field lines are always perpendicular to the surface of a conductor.</div>
+<div class="br-kp">Field lines are perpendicular to equipotential surfaces.</div>
+<div class="br-diagram"><div class="br-diagram-lbl">Fig 1.12 — Electric Field Lines</div><div class="br-diagram-desc">Isolated positive charge: lines radiate outward in all directions. Isolated negative charge: lines converge inward. Two unlike charges: lines originate at + and terminate at −, curving between them.</div></div>
+<div class="br-example"><div class="br-ex-lbl">📋 Example 1.6</div><div class="br-ex-txt">A positive charge +1 μC is at the origin. Find the electric field at a point 0.1 m away.<br><br>E = kQ/r² = (9×10⁹ × 1×10⁻⁶) / (0.1)² = 9×10⁵ N C⁻¹</div></div>`
+      },
+      '1.4':{
+        title:'Electric Potential and Potential Energy',
+        content:`<div class="br-h2">Electric Potential</div>
+<div class="br-p">Electric potential at a point is defined as the work done by an external force in bringing a unit positive charge from infinity to that point against the electric force, without acceleration.</div>
+<div class="br-formula">V = W / q₀ = kQ / r<small>Unit: Volt (V) = J C⁻¹</small></div>
+<div class="br-p">Electric potential is a scalar quantity. The potential due to multiple charges is the algebraic sum of potentials due to each charge.</div>
+<div class="br-h2">Relation Between E and V</div>
+<div class="br-formula">E = −dV / dr<small>Electric field = negative potential gradient</small></div>
+<div class="br-h2">Electric Potential Energy</div>
+<div class="br-p">The potential energy of a system of two point charges Q₁ and Q₂ separated by distance r is:</div>
+<div class="br-formula">U = kQ₁Q₂ / r<small>Unit: Joule (J)</small></div>
+<div class="br-h2">Equipotential Surfaces</div>
+<div class="br-kp">An equipotential surface is a surface on which the electric potential is the same at every point.</div>
+<div class="br-kp">No work is done in moving a charge along an equipotential surface.</div>
+<div class="br-kp">Electric field lines are always perpendicular to equipotential surfaces.</div>
+<div class="br-kp">Two equipotential surfaces can never intersect.</div>
+<div class="br-example"><div class="br-ex-lbl">📋 Example</div><div class="br-ex-txt">Find the potential at 0.5 m from a charge of +4 μC.<br><br>V = kQ/r = (9×10⁹ × 4×10⁻⁶) / 0.5 = 72,000 V = 72 kV</div></div>`
+      },
+      '1.5':{
+        title:'Gauss\'s Law and its Applications',
+        content:`<div class="br-h2">Electric Flux</div>
+<div class="br-p">Electric flux through a surface is defined as the number of electric field lines passing through that surface. For a surface element dA with outward normal n̂:</div>
+<div class="br-formula">dΦ = E · dA · cos θ<small>Total flux: Φ = ∮ E · dA</small></div>
+<div class="br-h2">Gauss's Law</div>
+<div class="br-p">The total electric flux through any closed surface (Gaussian surface) is equal to the total charge enclosed by that surface divided by the permittivity of free space.</div>
+<div class="br-formula">Φ = Q_enclosed / ε₀<small>ε₀ = 8.85 × 10⁻¹² C² N⁻¹ m⁻²</small></div>
+<div class="br-h2">Applications</div>
+<div class="br-kp">Electric field due to an infinitely long straight charged wire (linear charge density λ):</div>
+<div class="br-formula">E = λ / (2πε₀r)<small>Directed radially outward</small></div>
+<div class="br-kp">Electric field due to an infinite plane sheet of charge (surface charge density σ):</div>
+<div class="br-formula">E = σ / (2ε₀)<small>Directed perpendicular to the sheet</small></div>
+<div class="br-kp">Electric field inside a conductor at electrostatic equilibrium is zero.</div>
+<div class="br-kp">Excess charge on a conductor resides entirely on its outer surface.</div>
+<div class="br-example"><div class="br-ex-lbl">📋 Example</div><div class="br-ex-txt">A sphere of radius 10 cm has a charge of 2 μC uniformly distributed. Find E on the surface.<br><br>Using Gauss's law: E = kQ/r² = (9×10⁹ × 2×10⁻⁶)/(0.1)² = 1.8 × 10⁶ N C⁻¹</div></div>
+<div class="br-diagram"><div class="br-diagram-lbl">Fig — Gaussian Surface (Sphere)</div><div class="br-diagram-desc">A spherical Gaussian surface of radius r surrounds a point charge Q. By symmetry, E is constant over the surface and directed radially. Flux = E × 4πr² = Q/ε₀, giving Coulomb's law.</div></div>`
+      },
+      '1.6':{
+        title:'Capacitors and Dielectrics',
+        content:`<div class="br-h2">Capacitor</div>
+<div class="br-p">A capacitor is a device that stores electric charge and energy. It consists of two conductors (plates) separated by a gap or an insulating material (dielectric).</div>
+<div class="br-h2">Capacitance</div>
+<div class="br-p">Capacitance C is defined as the ratio of charge Q stored to the potential difference V between the plates:</div>
+<div class="br-formula">C = Q / V<small>Unit: Farad (F) = C V⁻¹</small></div>
+<div class="br-h2">Parallel Plate Capacitor</div>
+<div class="br-formula">C = ε₀A / d<small>A = plate area, d = separation between plates</small></div>
+<div class="br-h2">Effect of Dielectric</div>
+<div class="br-p">When a dielectric of dielectric constant K is inserted between the plates, capacitance increases by a factor K:</div>
+<div class="br-formula">C = Kε₀A / d = KC₀<small>K > 1 for all dielectrics</small></div>
+<div class="br-h2">Energy Stored</div>
+<div class="br-formula">U = ½CV² = Q²/2C = QV/2<small>Unit: Joule (J)</small></div>
+<div class="br-h2">Combination of Capacitors</div>
+<div class="br-kp">Series: 1/C = 1/C₁ + 1/C₂ + 1/C₃ (charge same, voltage divides)</div>
+<div class="br-kp">Parallel: C = C₁ + C₂ + C₃ (voltage same, charge adds)</div>
+<div class="br-example"><div class="br-ex-lbl">📋 Example</div><div class="br-ex-txt">A parallel plate capacitor has area 100 cm² and separation 2 mm. Find C.<br><br>C = ε₀A/d = (8.85×10⁻¹² × 100×10⁻⁴) / (2×10⁻³) = 4.4 × 10⁻¹¹ F = 44 pF</div></div>
+<div class="br-diagram"><div class="br-diagram-lbl">Fig — Parallel Plate Capacitor</div><div class="br-diagram-desc">Two parallel conducting plates of area A separated by distance d. Upper plate holds charge +Q, lower plate −Q. Uniform electric field E = σ/ε₀ exists between the plates. Fringing fields at edges are neglected.</div></div>`
+      }
+    }
+  }
+};
+
+// Chapter intros for Vol 1 chapters not fully populated
+const BOOK_CHAPTERS_BRIEF={
+  2:{num:'Unit 2',title:'Current Electricity',pages:'Pages 48–95 · Volume 1',intro:'Current electricity deals with the study of electric charges in motion. An electric current is defined as the rate of flow of charge through a conductor. This unit covers Ohm\'s Law, Kirchhoff\'s Laws, the Wheatstone bridge, and thermoelectric effects.'},
+  3:{num:'Unit 3',title:'Magnetism and Magnetic Effects of Electric Current',pages:'Pages 96–148 · Volume 1',intro:'This unit explores the relationship between electricity and magnetism. Moving charges produce magnetic fields. Topics include Biot-Savart Law, Ampere\'s Circuital Law, and the force on a current-carrying conductor in a magnetic field.'},
+  4:{num:'Unit 4',title:'Electromagnetic Induction and Alternating Current',pages:'Pages 149–196 · Volume 1',intro:'Electromagnetic induction is the phenomenon of generating an EMF in a circuit due to a change in magnetic flux. Faraday\'s and Lenz\'s laws govern this phenomenon. This unit also covers AC generators, transformers, and inductance.'},
+  5:{num:'Unit 5',title:'Electromagnetic Waves',pages:'Pages 197–212 · Volume 1',intro:'Electromagnetic waves are produced by accelerating charges and do not require a medium for propagation. Maxwell\'s equations predict their existence. This unit covers the electromagnetic spectrum from radio waves to gamma rays.'},
+  6:{num:'Unit 6',title:'Ray Optics',pages:'Volume 2',intro:'Ray optics studies the behaviour of light using the ray model. Topics include reflection, refraction, total internal reflection, lens formula, mirror formula, and optical instruments such as the microscope and telescope.'},
+  7:{num:'Unit 7',title:'Wave Optics',pages:'Volume 2',intro:'Wave optics explains phenomena that cannot be explained by ray optics — interference, diffraction, and polarisation. Huygens\' principle and Young\'s double slit experiment are central to this unit.'},
+  8:{num:'Unit 8',title:'Dual Nature of Radiation and Matter',pages:'Volume 2',intro:'Light exhibits both wave and particle properties. The photoelectric effect demonstrates the particle nature of light. de Broglie proposed that matter also has wave properties. This unit covers Einstein\'s photoelectric equation and de Broglie wavelength.'},
+  9:{num:'Unit 9',title:'Atomic and Nuclear Physics',pages:'Volume 2',intro:'This unit covers Bohr\'s model of the hydrogen atom, the nucleus, radioactive decay, nuclear fission and fusion. Nuclear energy and its applications including nuclear reactors are discussed.'},
+  10:{num:'Unit 10',title:'Electronics and Communication',pages:'Volume 2',intro:'Semiconductors form the basis of modern electronics. This unit covers p-n junction diodes, transistors, logic gates, and the fundamentals of communication systems including modulation.'},
+  11:{num:'Unit 11',title:'Recent Developments in Physics',pages:'Volume 2',intro:'This unit introduces nanomaterials, nanotechnology, robotics, and biomaterials — emerging areas at the intersection of physics, chemistry, and biology with far-reaching technological applications.'}
+};
+
+function openBookChapter(chId){
+  const ch=BOOK_CONTENT[chId]||null;
+  const brief=BOOK_CHAPTERS_BRIEF[chId]||null;
+  document.getElementById('br-title').textContent=ch?`Unit ${chId}: ${ch.title}`:(brief?`Unit ${chId}: ${brief.title}`:'Physics Textbook');
+  document.getElementById('br-sub').textContent='TN Samacheer Kalvi · Class 12';
+  const body=document.getElementById('br-body'); body.innerHTML='';
+  if(ch){
+    // Chapter cover
+    body.innerHTML=`<div class="br-chapter-cover"><div class="br-ch-num">${ch.num}</div><div class="br-ch-title">${ch.title}</div><div class="br-ch-pages">${ch.pages}</div></div>`;
+    // Table of contents
+    const toc=document.createElement('div'); toc.className='br-toc';
+    toc.innerHTML=`<div class="br-toc-t">Topics in this chapter</div>`;
+    Object.keys(ch.topics).forEach(key=>{
+      const tp=ch.topics[key];
+      const item=document.createElement('div'); item.className='br-toc-item';
+      item.innerHTML=`<div class="br-toc-num">${key}</div><div class="br-toc-nm">${tp.title}</div><div class="br-toc-pg">↓</div>`;
+      item.onclick=()=>{ const el=document.getElementById('br-sec-'+key); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); };
+      toc.appendChild(item);
+    }); body.appendChild(toc);
+    // Intro paragraph
+    const intro=document.createElement('div'); intro.className='br-section';
+    intro.innerHTML=`<div class="br-p" style="font-style:italic;color:var(--txt2)">${ch.intro}</div>`; body.appendChild(intro);
+    // Sections
+    Object.keys(ch.topics).forEach(key=>{
+      const tp=ch.topics[key];
+      const sec=document.createElement('div'); sec.className='br-section';
+      sec.innerHTML=`<div id="br-sec-${key}" class="br-sec-anchor"></div><div class="br-sec-num">${key}</div><div class="br-sec-title">${tp.title}</div>${tp.content}`;
+      body.appendChild(sec);
+    });
+  } else if(brief){
+    body.innerHTML=`<div class="br-chapter-cover"><div class="br-ch-num">${brief.num}</div><div class="br-ch-title">${brief.title}</div><div class="br-ch-pages">${brief.pages}</div></div><div class="br-section"><div class="br-p" style="font-style:italic;color:var(--txt2)">${brief.intro}</div></div><div class="br-coming"><div class="br-coming-ic">📝</div><div class="br-coming-t">Full content coming soon</div><div class="br-coming-s">Our teachers are verifying and formatting this chapter's content. It will be available before the June 2026 launch.</div></div>`;
+  }
+  S.book={fromTopic:false};
+  document.getElementById('book-reader').classList.add('on');
+  body.scrollTop=0;
+}
+
+function openBookTopic(topicKey){
+  const chId=parseInt(topicKey.split('.')[0]);
+  const ch=BOOK_CONTENT[chId];
+  if(!ch){ toast('Content coming soon!'); return; }
+  const tp=ch.topics[topicKey];
+  if(!tp){ toast('Content coming soon!'); return; }
+  document.getElementById('br-title').textContent=`${topicKey} ${tp.title}`;
+  document.getElementById('br-sub').textContent=`Unit ${chId}: ${ch.title} · TN Class 12`;
+  const body=document.getElementById('br-body'); body.innerHTML='';
+  // Topic header
+  body.innerHTML=`<div class="br-chapter-cover" style="padding:14px 16px"><div class="br-ch-num">Unit ${chId} · ${ch.title}</div><div class="br-ch-title" style="font-size:15px">${topicKey} ${tp.title}</div></div>`;
+  const sec=document.createElement('div'); sec.className='br-section';
+  sec.innerHTML=tp.content; body.appendChild(sec);
+  S.book={fromTopic:true};
+  document.getElementById('book-reader').classList.add('on');
+  body.scrollTop=0;
+}
+
+function closeBook(){
+  document.getElementById('book-reader').classList.remove('on');
+}
+
 const CHS=[
   {id:1,name:"Electrostatics",topics:["Frictional Electricity","Coulomb's Law","Electric Field & Lines","Electric Potential & Energy","Gauss's Law","Capacitors & Dielectrics"]},
   {id:2,name:"Current Electricity",topics:["Electric Current","Ohm's Law","Kirchhoff's Laws","Wheatstone Bridge","Thermoelectric Effects"]},
@@ -758,7 +1165,30 @@ const TEACHERS=[
 ];
 const TC_COLORS=["#1565c0","#6a1b9a","#2e7d32","#e65100","#37474f","#c62828","#00695c","#4e342e","#283593","#558b2f","#6d4c41","#1565c0","#4a148c","#1b5e20","#0d47a1"];
 
-const S={done:{study:{},revise:{}},mcq:{cur:0,correct:0,wrong:[],pool:[],total:10,answered:false,backTo:'s-practice-sel'},curCh:1,curTopic:'1.1',curTpTab:'sum',curRvTab:'kp'};
+// ── STORY CONTENT (mixed MCQ + fact cards) ──
+const STORY_SLIDES=[
+  {type:'fact',lbl:'💡 DID YOU KNOW · Ch 1.5',txt:"Gauss's Law is so powerful it can derive Coulomb's Law in just 3 lines. Gauss published it in 1867 — 80 years after Coulomb — yet it's more fundamental.",src:"Electrostatics · Chapter 1"},
+  {type:'mcq',lbl:'⚡ DAILY CHALLENGE · Gauss\'s Law',q:"The total electric flux through a closed surface equals the enclosed charge divided by?",opts:["ε (permittivity of medium)","k (Coulomb's constant)","ε₀ (permittivity of free space)","μ₀ (permeability of free space)"],ans:2,explain:"Φ = Q_enc / ε₀ — Gauss's Law"},
+  {type:'fact',lbl:'⚡ DID YOU KNOW · Ch 1.2',txt:"If you placed 1 Coulomb of charge 1 metre apart, the repulsive force would equal the weight of 900,000 cars. Real charges are measured in microcoulombs (μC) for this reason.",src:"Coulomb's Law · Chapter 1"}
+];
+
+const S={done:{study:{},revise:{}},mcq:{cur:0,correct:0,wrong:[],pool:[],total:10,answered:false,backTo:'s-practice-sel'},curCh:1,curTopic:'1.1',curTpTab:'sum',curRvTab:'kp',story:{cur:0,answered:false},book:{fromTopic:false}};
+
+// ── ONBOARDING ──
+function obNext(step){
+  for(let i=1;i<=4;i++) document.getElementById('ob-s'+i).classList.remove('on');
+  document.getElementById('ob-s'+step).classList.add('on');
+}
+function obFinish(){
+  document.getElementById('onboarding').classList.add('hide');
+  const name=document.getElementById('ob-name').value||'Imtha';
+  // Update greeting in physics chat
+  const msgs=document.getElementById('msgs-physics');
+  if(msgs){
+    const greet=msgs.querySelector('.bbl.in');
+    if(greet) greet.innerHTML=`Hi ${name}! What would you like to do? 👇<div class="bt">9:41</div>`;
+  }
+}
 
 // ── NAV ──
 function go(id){
@@ -777,21 +1207,157 @@ function go(id){
 }
 function showInfo(){ buildTeachers(); document.getElementById('info-panel').classList.add('on'); }
 function hideInfo(){ document.getElementById('info-panel').classList.remove('on'); }
+function openSettings(){ document.getElementById('settings-panel').classList.add('on'); }
+function closeSettings(){ document.getElementById('settings-panel').classList.remove('on'); }
+
+function toggleDark(){
+  const body=document.body;
+  const tg=document.getElementById('dark-toggle');
+  if(body.classList.contains('dark')){
+    body.classList.remove('dark'); body.classList.add('light'); tg.classList.remove('on');
+  } else {
+    body.classList.remove('light'); body.classList.add('dark'); tg.classList.add('on');
+  }
+}
+
 function toast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg; t.style.cssText='position:absolute;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:8px 16px;border-radius:20px;font-size:12px;white-space:nowrap;opacity:1;transition:opacity .3s;pointer-events:none;z-index:99';
   setTimeout(()=>t.style.opacity='0',2200);
 }
 
-// ── STORY ──
-function openStory(){ document.getElementById('story-ov').classList.add('on'); }
+// ── STORY (mixed content) ──
+function openStory(){
+  S.story.cur=0; S.story.answered=false;
+  document.getElementById('story-ov').classList.add('on');
+  renderStorySlide();
+}
 function closeStory(){ document.getElementById('story-ov').classList.remove('on'); }
-function storyAns(el,correct){
-  [...document.getElementById('s-opts').children].forEach(o=>{ o.onclick=null; o.style.opacity='.45'; });
-  el.style.opacity='1'; el.className='story-opt '+(correct?'ok':'no');
-  if(!correct) [...document.getElementById('s-opts').children].forEach(o=>{ if(o.textContent.includes('ε₀')) o.className='story-opt reveal'; });
-  document.getElementById('s-res-txt').textContent=correct?'✅ Correct! +10 XP':'❌ Not quite — see correct answer';
+
+function renderStorySlide(){
+  const slides=STORY_SLIDES;
+  const bars=document.getElementById('story-bars'); bars.innerHTML='';
+  slides.forEach((_, i)=>{
+    const bar=document.createElement('div'); bar.className='s-bar';
+    const fill=document.createElement('div'); fill.className='s-bar-fill';
+    if(i<S.story.cur) fill.classList.add('done');
+    if(i===S.story.cur) fill.classList.add('run');
+    bar.appendChild(fill); bars.appendChild(bar);
+  });
+  const cur=S.story.cur; const slide=slides[cur];
+  document.getElementById('story-hd-txt').textContent='Physics · '+( slide.type==='mcq'?'Daily Challenge':'Did You Know');
+  const body=document.getElementById('story-body');
+  if(slide.type==='fact'){
+    body.innerHTML=`<div class="story-fact-card"><div class="story-fact-lbl">${slide.lbl}</div><div class="story-fact-txt">${slide.txt}</div><div class="story-fact-src">${slide.src}</div></div><div class="story-share" onclick="toast('Shared to WhatsApp! 📲')">📤 Share this fact</div>`;
+    // Auto-advance after 6s
+    S.story._timer=setTimeout(()=>{ if(S.story.cur===cur) storyNext(); },6000);
+  } else {
+    S.story.answered=false;
+    body.innerHTML=`<div class="story-ql">${slide.lbl}</div><div class="story-q">${slide.q}</div><div class="story-opts" id="s-opts">${slide.opts.map((o,i)=>`<div class="story-opt" onclick="storyAns(this,${i===(slide.ans)},${slide.ans})">${o}</div>`).join('')}</div><div class="story-res" id="s-res"><div class="story-res-txt" id="s-res-txt"></div><div class="story-res-sub">${slide.explain}</div><div class="story-res-cta" onclick="storyNext()">${cur>=slides.length-1?'Done ✓':'Next →'}</div></div>`;
+  }
+}
+function storyNext(){
+  clearTimeout(S.story._timer);
+  if(S.story.cur<STORY_SLIDES.length-1){ S.story.cur++; renderStorySlide(); }
+  else closeStory();
+}
+function storyAns(el,correct,correctIdx){
+  if(S.story.answered) return; S.story.answered=true;
+  clearTimeout(S.story._timer);
+  const opts=document.getElementById('s-opts');
+  [...opts.children].forEach((b,i)=>{ b.onclick=null; if(i===correctIdx) b.className='story-opt ok'; else if(b===el&&!correct) b.className='story-opt no'; else b.className='story-opt'; });
+  document.getElementById('s-res-txt').textContent=correct?'✅ Correct! +10 XP':'❌ Not quite — see correct answer above';
   document.getElementById('s-res').style.display='block';
+}
+
+// ── PYQ VIEW ──
+function buildPYQYears(){
+  const el=document.getElementById('pyq-yr-list'); el.innerHTML='';
+  [2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].forEach(yr=>{
+    const d=document.createElement('div'); d.className='yr-item';
+    d.innerHTML=`<div class="yr-num">${yr}</div><div class="yr-info"><div class="yr-t">March ${yr} Public Exam</div><div class="yr-s">Physics (Core) · 75 marks · 3 hrs</div></div><div style="color:#4caf50;font-size:12px">View ↗</div>`;
+    d.onclick=()=>openPYQYear(yr); el.appendChild(d);
+  });
+}
+function openPYQYear(yr){
+  document.getElementById('pyq-yr-nm').textContent=yr+' Paper';
+  const body=document.getElementById('pyq-paper-body'); body.innerHTML='';
+  const paper=PYQ_PAPER[yr]||PYQ_PAPER[2023];
+  paper.forEach(sec=>{ const sh=document.createElement('div'); sh.style.cssText='padding:7px 14px 4px;font-size:10px;font-weight:700;color:var(--tab-on);background:var(--sec-hd);border-bottom:.5px solid var(--bdr)'; sh.textContent=sec.sec; body.appendChild(sh); sec.qs.forEach(q=>{ const d=document.createElement('div'); d.style.cssText='padding:9px 14px;border-bottom:.5px solid var(--bdr);font-size:13px;color:var(--txt);line-height:1.5'; d.textContent=q; body.appendChild(d); }); });
+  if(!PYQ_PAPER[yr]){ const n=document.createElement('div'); n.style.cssText='padding:14px;font-size:12px;color:var(--txt3);text-align:center'; n.textContent=`${yr} paper coming soon. Showing 2023.`; body.prepend(n); }
+  go('s-pyq-paper');
+}
+
+function toggleAns(i,el){ const a=document.getElementById('pa'+i); const show=a.style.display==='block'; a.style.display=show?'none':'block'; el.textContent=show?'▼ See Answer':'▲ Hide Answer'; }
+
+// ── MCQ ENGINE ──
+function startMCQ(count,mode='ch'){
+  S.mcq.pool=MCQS.slice(0,Math.min(count,MCQS.length)); S.mcq.total=S.mcq.pool.length; S.mcq.cur=0; S.mcq.correct=0; S.mcq.wrong=[]; S.mcq.answered=false;
+  S.mcq.backTo='s-practice-sel';
+  document.getElementById('mcq-back-btn').onclick=()=>go('s-practice-sel');
+  go('s-mcq'); renderMCQ();
+}
+function renderMCQ(){
+  S.mcq.answered=false;
+  document.getElementById('mcq-prog').textContent=`Q${S.mcq.cur+1}/${S.mcq.total} · Electrostatics`;
+  const msgs=document.getElementById('mcq-msgs'); msgs.innerHTML='';
+  if(S.mcq.cur>=S.mcq.pool.length){ showResult(); return; }
+  const q=S.mcq.pool[S.mcq.cur];
+  const dv=document.createElement('div'); dv.className='dv'; dv.textContent=`${S.mcq.cur+1} / ${S.mcq.total}`; msgs.appendChild(dv);
+  const card=document.createElement('div'); card.className='mcq'; card.innerHTML=`<div class="mcq-lbl"><span>${q.topic}</span></div><div class="mcq-q">${q.q}</div><div class="mcq-opts" id="mo${S.mcq.cur}"></div>`; msgs.appendChild(card);
+  const opts=document.getElementById('mo'+S.mcq.cur);
+  q.opts.forEach((o,i)=>{ const b=document.createElement('div'); b.className='mop'; b.textContent=o; b.onclick=()=>answerQ(i,opts,q); opts.appendChild(b); });
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function answerQ(i,opts,q){
+  if(S.mcq.answered) return; S.mcq.answered=true;
+  const ok=i===q.ans;
+  if(ok) S.mcq.correct++; else S.mcq.wrong.push({...q,chosen:q.opts[i]});
+  [...opts.children].forEach((b,idx)=>{ b.onclick=null; if(idx===q.ans) b.className='mop ok'; else if(idx===i&&!ok) b.className='mop no'; else b.className='mop'; });
+  const msgs=document.getElementById('mcq-msgs');
+  const fb=document.createElement('div'); fb.className='bbl in'; fb.style.background=ok?'#e8f5e9':'#ffebee'; fb.innerHTML=ok?`✅ <b>Correct!</b><div class="bt">now</div>`:`❌ Correct: <b>${q.opts[q.ans]}</b><div class="bt">now</div>`; msgs.appendChild(fb);
+  const isLast=S.mcq.cur>=S.mcq.total-1;
+  const nb=document.createElement('div'); nb.className='qr-btns'; const bb=document.createElement('div'); bb.className='qrb pri'; bb.textContent=isLast?'See Results →':'Next →'; bb.onclick=()=>{ if(isLast) showResult(); else{S.mcq.cur++;renderMCQ();} }; nb.appendChild(bb); msgs.appendChild(nb);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function showResult(){
+  const {correct,total,wrong}=S.mcq; const pct=Math.round(correct/total*100);
+  const msgs=document.getElementById('result-msgs'); msgs.innerHTML='';
+  const dv=document.createElement('div'); dv.className='dv'; dv.textContent='Session Complete'; msgs.appendChild(dv);
+  const rc=document.createElement('div'); rc.className='res-card'; rc.innerHTML=`<div class="res-big">${correct} / ${total}</div><div style="font-size:11px;color:var(--txt3);text-align:center;margin-top:2px">${pct}% Accuracy</div><div class="res-row"><div class="res-st"><div class="res-v" style="color:var(--tab-on)">${pct}%</div>Score</div><div class="res-st"><div class="res-v" style="color:var(--sk-txt)">🔥 6</div>Streak</div><div class="res-st"><div class="res-v" style="color:#f59e0b">+${correct*5}</div>XP</div></div><div class="bt">now</div>`; msgs.appendChild(rc);
+  // Weak topic bubble — V5: awareness only, no forced retry
+  if(wrong.length>0){
+    const wc=document.createElement('div'); wc.className='weak-card';
+    wc.innerHTML=`<div style="font-size:10px;font-weight:700;color:#ef5350;margin-bottom:5px">📊 WEAK TOPICS</div>${wrong.slice(0,3).map(w=>`<div style="font-size:12.5px;color:var(--txt);padding:2px 0">• ${w.topic}</div>`).join('')}<div style="font-size:10px;color:var(--txt3);margin-top:5px">Review these before your next session</div><div class="bt">now</div>`;
+    msgs.appendChild(wc);
+  }
+  const nb=document.createElement('div'); nb.className='qr-btns'; nb.style.marginTop='4px'; nb.innerHTML=`<div class="qrb pri" onclick="go('s-physics')">🏠 Back to Physics</div><div class="qrb" onclick="go('s-practice-menu')">↺ Practice Again</div>`; msgs.appendChild(nb);
+  go('s-result'); setTimeout(()=>msgs.scrollTop=msgs.scrollHeight,80);
+}
+
+// ── STATUS ──
+function buildStatus(){
+  const body=document.getElementById('status-body'); body.innerHTML='';
+  const sk=document.createElement('div'); sk.style.cssText='background:var(--bg);padding:12px 14px;border-bottom:8px solid var(--bg3)';
+  sk.innerHTML=`<div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">🔥</span><div><div style="font-size:15px;font-weight:700;color:var(--sk-txt)">6 Day Streak</div><div style="font-size:11px;color:var(--txt4)">Best: 14 days</div></div><div style="margin-left:auto;background:var(--sk-bg);border:1px solid var(--sk-bdr);border-radius:6px;padding:3px 8px;font-size:10px;color:var(--sk-txt);font-weight:600">Freeze: 1 left</div></div>`;
+  body.appendChild(sk);
+  const xp=document.createElement('div'); xp.style.cssText='background:var(--bg);padding:12px 14px;border-bottom:8px solid var(--bg3);display:flex;justify-content:space-around';
+  xp.innerHTML=`<div style="text-align:center"><div style="font-size:18px">🏆</div><div style="font-size:13px;font-weight:700;color:var(--tab-on)">Rank #4</div><div style="font-size:10px;color:var(--txt4)">This week</div></div><div style="text-align:center"><div style="font-size:18px;font-weight:700;color:#f59e0b">42</div><div style="font-size:13px;font-weight:700;color:#f59e0b">MCQs</div><div style="font-size:10px;color:var(--txt4)">All time</div></div><div style="text-align:center"><div style="font-size:18px;font-weight:700;color:#7c3aed">4</div><div style="font-size:13px;font-weight:700;color:#7c3aed">Badges</div><div style="font-size:10px;color:var(--txt4)">Earned</div></div>`;
+  body.appendChild(xp);
+  const hd=document.createElement('div'); hd.className='sec-hd'; hd.textContent='CHAPTER PROGRESS — Tap to continue'; body.appendChild(hd);
+  CHS.forEach(ch=>{
+    const sP=chPct(ch.id,'study'), rP=chPct(ch.id,'revise');
+    const d=document.createElement('div'); d.className='st-row';
+    d.innerHTML=`<div class="st-cn">Ch ${ch.id}: ${ch.name}</div><div class="st-tabs"><div class="st-tab" onclick="S.curCh=${ch.id};go('s-study-ch')"><div class="st-lbl">Study</div><div class="st-bar"><div class="st-fill" style="width:${sP}%"></div></div><div class="st-pct">${sP}%</div></div><div class="st-tab" onclick="S.curCh=${ch.id};S.curRvTab='kp';go('s-revise-ch')"><div class="st-lbl">Revise</div><div class="st-bar"><div class="st-fill" style="width:${rP}%"></div></div><div class="st-pct">${rP}%</div></div></div>`;
+    body.appendChild(d);
+  });
+}
+
+// ── TEACHERS ──
+function buildTeachers(){
+  const el=document.getElementById('teacher-list'); if(el.innerHTML) return;
+  const bc={mas:'#7c3aed',exp:'#f59e0b',ver:'#2C3E7A'};
+  TEACHERS.forEach((t,idx)=>{ const d=document.createElement('div'); d.className='tc'; d.innerHTML=`<div class="tc-top"><div class="tc-av" style="background:${TC_COLORS[idx%TC_COLORS.length]}">${t.init}</div><div style="flex:1;min-width:0"><div class="tc-nm">${t.name} <span class="tc-bdg" style="background:${bc[t.badge]}">${t.badgeLbl}</span></div><div class="tc-school">${t.school}</div></div></div><div class="tc-stats"><div class="tc-stat"><div class="tc-stat-v">${t.students}</div><div class="tc-stat-l">Students</div></div><div class="tc-stat"><div class="tc-stat-v">${t.verified}</div><div class="tc-stat-l">Verified</div></div><div class="tc-stat"><div class="tc-stat-v">${t.exp}</div><div class="tc-stat-l">Exp</div></div><div class="tc-stat"><div class="tc-stat-v">${t.rating}⭐</div><div class="tc-stat-l">Rating</div></div></div><div class="tc-chs">📚 ${t.chs}</div>`; el.appendChild(d); });
 }
 
 // ── CHAPTER LISTS ──
@@ -827,21 +1393,19 @@ function buildPracChList(){
   });
 }
 
-// ── PRACTICE BY TOPIC — STEP 1: CHAPTERS ──
+// ── PRACTICE BY TOPIC ──
 function buildPracTopicChList(){
   const el=document.getElementById('prac-topic-ch-list'); el.innerHTML='';
   [['VOLUME 1',CHS.filter(c=>c.id<=5)],['VOLUME 2',CHS.filter(c=>c.id>5)]].forEach(([lbl,chs])=>{
     const sh=document.createElement('div'); sh.className='sec-hd'; sh.textContent=lbl; el.appendChild(sh);
     chs.forEach(ch=>{
       const d=document.createElement('div'); d.className='chitem';
-      d.innerHTML=`<div class="ch-num">${ch.id}</div><div class="ch-nm">${ch.name}<div style="font-size:10px;color:#aaa;margin-top:2px">${ch.topics.length} topics</div></div><div class="ch-arr">›</div>`;
+      d.innerHTML=`<div class="ch-num">${ch.id}</div><div class="ch-nm">${ch.name}<div style="font-size:10px;color:var(--txt4);margin-top:2px">${ch.topics.length} topics</div></div><div class="ch-arr">›</div>`;
       d.onclick=()=>{ S.curCh=ch.id; buildPracTopics(); go('s-practice-topic-list'); };
       el.appendChild(d);
     });
   });
 }
-
-// ── PRACTICE BY TOPIC — STEP 2: TOPICS ──
 function buildPracTopics(){
   const ch=CHS.find(c=>c.id===S.curCh);
   document.getElementById('prac-topic-ch-nm').textContent=`Ch ${ch.id}: ${ch.name}`;
@@ -866,7 +1430,7 @@ function buildPYQPracList(){
   const el=document.getElementById('pyq-prac-list'); el.innerHTML='';
   [2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].forEach(yr=>{
     const d=document.createElement('div'); d.className='yr-item';
-    d.innerHTML=`<div class="yr-num">${yr}</div><div class="yr-info"><div class="yr-t">${yr} Board Exam MCQs</div><div class="yr-s">Practice questions from this year's paper</div></div><div style="color:#075e54;font-size:12px">Start ›</div>`;
+    d.innerHTML=`<div class="yr-num">${yr}</div><div class="yr-info"><div class="yr-t">${yr} Board Exam MCQs</div><div class="yr-s">Practice questions from this year's paper</div></div><div style="color:var(--tab-on);font-size:12px">Start ›</div>`;
     d.onclick=()=>{
       S.mcq.pool=PYQ_MCQ; S.mcq.total=PYQ_MCQ.length; S.mcq.cur=0; S.mcq.correct=0; S.mcq.wrong=[];
       S.mcq.backTo='s-pyq-practice';
@@ -882,10 +1446,19 @@ function buildStudyCh(){
   const ch=CHS.find(c=>c.id===S.curCh);
   document.getElementById('study-ch-nm').textContent=`Ch ${ch.id}: ${ch.name}`;
   const body=document.getElementById('study-ch-body'); body.innerHTML='';
+
+  // ── VIEW BOOK (new — above Chapter Summary) ──
+  const vb=document.createElement('div'); vb.className='chitem';
+  vb.innerHTML=`<div style="width:30px;height:30px;border-radius:8px;background:var(--yr-bg);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📖</div><div class="ch-nm" style="font-weight:600;color:var(--tab-on)">View Book <span style="font-size:10px;font-weight:400;color:var(--txt3)">${BOOK_CONTENT[ch.id]?'Full content available':'Coming soon'}</span></div><div style="font-size:10px;font-weight:600;color:var(--tab-on);flex-shrink:0">View ›</div>`;
+  vb.onclick=()=>openBookChapter(ch.id);
+  body.appendChild(vb);
+
+  // ── CHAPTER SUMMARY ──
   const sr=document.createElement('div'); sr.className='chitem';
-  sr.innerHTML=`<div style="width:30px;height:30px;border-radius:8px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📄</div><div class="ch-nm" style="font-weight:600">Chapter Summary (PDF)</div><div class="ch-arr">›</div>`;
+  sr.innerHTML=`<div style="width:30px;height:30px;border-radius:8px;background:var(--yr-bg);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📄</div><div class="ch-nm" style="font-weight:600">Chapter Summary (PDF)</div><div class="ch-arr">›</div>`;
   sr.onclick=()=>openDoc(CH_SUM[ch.id]||notReady(),`Ch ${ch.id} Summary.pdf`);
   body.appendChild(sr);
+
   const th=document.createElement('div'); th.className='sec-hd'; th.textContent='TOPICS'; body.appendChild(th);
   ch.topics.forEach((tp,i)=>{
     const key=`${ch.id}.${i+1}`, isDone=S.done.study[key];
@@ -895,7 +1468,6 @@ function buildStudyCh(){
     body.appendChild(d);
   });
 }
-
 function buildTopicView(){
   const key=S.curTopic;
   const ch=CHS.find(c=>c.topics.some((_,i)=>`${c.id}.${i+1}`===key));
@@ -904,28 +1476,39 @@ function buildTopicView(){
   document.getElementById('tp-bk').onclick=()=>go('s-study-ch');
   document.getElementById('tp-tab-s').className='tab'+(S.curTpTab==='sum'?' on':'');
   document.getElementById('tp-tab-k').className='tab'+(S.curTpTab==='kp'?' on':'');
+  document.getElementById('tp-tab-b').className='tab'+(S.curTpTab==='book'?' on':'');
+
+  if(S.curTpTab==='book'){
+    openBookTopic(key);
+    S.curTpTab='sum';
+    document.getElementById('tp-tab-s').className='tab on';
+    document.getElementById('tp-tab-b').className='tab';
+    return;
+  }
+
   const td=TOPIC_DATA[key];
-  document.getElementById('tp-body').innerHTML=td?(S.curTpTab==='sum'?td.sum:td.kp):`<div style="padding:16px;font-size:13px;color:#aaa">Content coming soon.</div>`;
+  document.getElementById('tp-body').innerHTML=td?(S.curTpTab==='sum'?td.sum:td.kp):`<div style="padding:16px;font-size:13px;color:var(--txt3)">Content coming soon.</div>`;
   const ytRow=document.getElementById('yt-row');
   ytRow.innerHTML='';
   if(td&&td.yt&&S.curTpTab==='sum'){
-    const lbl=document.createElement('div'); lbl.style.cssText='font-size:10px;font-weight:700;color:#8696a0;letter-spacing:.6px;margin-bottom:4px'; lbl.textContent='📹 WATCH'; ytRow.appendChild(lbl);
-    td.yt.forEach(v=>{ const c=document.createElement('div'); c.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 8px;background:#f9f9f9;border-radius:8px;cursor:pointer;border:.5px solid #f0f0f0;margin-bottom:3px'; c.innerHTML=`<div style="width:26px;height:26px;background:#ff0000;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0">▶</div><div style="font-size:12px;font-weight:500;color:#111">${v}</div>`; c.onclick=()=>toast('Opening: '+v); ytRow.appendChild(c); });
+    const lbl=document.createElement('div'); lbl.style.cssText='font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.6px;margin-bottom:4px'; lbl.textContent='📹 WATCH'; ytRow.appendChild(lbl);
+    td.yt.forEach(v=>{ const c=document.createElement('div'); c.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--bg3);border-radius:8px;cursor:pointer;border:.5px solid var(--bdr);margin-bottom:3px'; c.innerHTML=`<div style="width:26px;height:26px;background:#ff0000;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0">▶</div><div style="font-size:12px;font-weight:500;color:var(--txt)">${v}</div>`; c.onclick=()=>toast('Opening: '+v); ytRow.appendChild(c); });
     ytRow.style.display='flex'; ytRow.style.flexDirection='column';
   } else ytRow.style.display='none';
   const btn=document.getElementById('tp-done-btn');
   const isDone=S.done.study[key];
   btn.textContent=isDone?'✓ Done':'✓ Mark as Done';
-  btn.style.background=isDone?'#4caf50':'#075e54';
+  btn.style.background=isDone?'#4caf50':'var(--hd)';
 }
 function tpTab(tab){ S.curTpTab=tab; buildTopicView(); }
 function markTopicDone(){
   const key=S.curTopic; S.done.study[key]=true; buildTopicView();
+  // V5: fact card goes to Physics chat (not interrupting study flow — user navigates back)
   const sc=STUDY_CARDS[key];
   if(sc){
     const msgs=document.getElementById('msgs-physics');
     const card=document.createElement('div'); card.className='study-card';
-    card.innerHTML=`<div class="sc-tag">💡 Did you know · ${key}</div><div class="sc-fact">${sc[0]}</div><div class="sc-src">${sc[1]} · Just completed ✓</div>`;
+    card.innerHTML=`<div class="sc-tag">💡 Did you know · ${key}</div><div class="sc-fact">${sc[0]}</div><div class="sc-src">${sc[1]} · Just completed ✓</div><div class="sc-share" onclick="toast('Shared to WhatsApp! 📲')"><span>📤</span><span>Share this fact</span></div>`;
     msgs.appendChild(card); msgs.scrollTop=msgs.scrollHeight;
   }
   toast('Done! ✅ +10 XP');
@@ -938,7 +1521,7 @@ function openDoc(html,filename){
   const ft=document.createElement('div'); ft.className='doc-ft'; ft.innerHTML=`<button class="df-p" onclick="toast('Marked done! +10 XP');go('s-study-ch')">✓ Mark Done</button><button class="df-s" onclick="go('s-study-ch')">← Back</button>`; body.appendChild(ft);
   go('s-study-ch');
 }
-function notReady(){ return '<div style="padding:16px;font-size:13px;color:#aaa">Content coming soon.</div>'; }
+function notReady(){ return '<div style="padding:16px;font-size:13px;color:var(--txt3)">Content coming soon.</div>'; }
 
 // ── REVISE ──
 function buildRevCh(tab){
@@ -948,7 +1531,7 @@ function buildRevCh(tab){
   ['rv-t1','rv-t2','rv-t3'].forEach((id,i)=>document.getElementById(id).className='tab'+(tab===['kp','tw','pyq'][i]?' on':''));
   const body=document.getElementById('rv-body'); body.innerHTML='';
   if(tab==='kp'){
-    const d=document.createElement('div'); d.style.cssText='padding:14px'; d.innerHTML=CH_KP[ch.id]||'<div style="color:#aaa">Coming soon.</div>'; body.appendChild(d);
+    const d=document.createElement('div'); d.style.cssText='padding:14px'; d.innerHTML=CH_KP[ch.id]||'<div style="color:var(--txt3)">Coming soon.</div>'; body.appendChild(d);
     const btn=document.createElement('div'); btn.style.cssText='padding:0 14px 14px'; btn.innerHTML=`<button class="df-p" style="width:100%" onclick="S.done.revise['${ch.id}.all']=true;toast('Key points revised! +15 XP');go('s-revise-chs')">✓ Mark Chapter Revised</button>`; body.appendChild(btn);
   } else if(tab==='tw'){
     ch.topics.forEach((tp,i)=>{
@@ -960,94 +1543,10 @@ function buildRevCh(tab){
     });
   } else if(tab==='pyq'){
     if(ch.id===1) PYQS.forEach((q,i)=>{ const d=document.createElement('div'); d.className='pyq-item'; d.innerHTML=`<div class="pyq-meta">${q.year} · ${q.marks}m</div><div class="pyq-q">${q.q}</div><div class="pyq-ans" id="pa${i}">${q.a}</div><span class="see-ans" onclick="toggleAns(${i},this)">▼ See Answer</span>`; body.appendChild(d); });
-    else body.innerHTML='<div style="padding:16px;font-size:13px;color:#aaa">PYQs for this chapter coming soon.</div>';
+    else body.innerHTML='<div style="padding:16px;font-size:13px;color:var(--txt3)">PYQs for this chapter coming soon.</div>';
   }
 }
 function rvTab(tab){ buildRevCh(tab); }
-function toggleAns(i,el){ const a=document.getElementById('pa'+i); const show=a.style.display==='block'; a.style.display=show?'none':'block'; el.textContent=show?'▼ See Answer':'▲ Hide Answer'; }
-
-// ── PYQ VIEW (main menu — read only) ──
-function buildPYQYears(){
-  const el=document.getElementById('pyq-yr-list'); el.innerHTML='';
-  [2024,2023,2022,2021,2020,2019,2018,2017,2016,2015].forEach(yr=>{
-    const d=document.createElement('div'); d.className='yr-item';
-    d.innerHTML=`<div class="yr-num">${yr}</div><div class="yr-info"><div class="yr-t">March ${yr} Public Exam</div><div class="yr-s">Physics (Core) · 75 marks · 3 hrs</div></div><div style="color:#4caf50;font-size:12px">View ↗</div>`;
-    d.onclick=()=>openPYQYear(yr); el.appendChild(d);
-  });
-}
-function openPYQYear(yr){
-  document.getElementById('pyq-yr-nm').textContent=yr+' Paper';
-  const body=document.getElementById('pyq-paper-body'); body.innerHTML='';
-  const paper=PYQ_PAPER[yr]||PYQ_PAPER[2023];
-  paper.forEach(sec=>{ const sh=document.createElement('div'); sh.style.cssText='padding:7px 14px 4px;font-size:10px;font-weight:700;color:#075e54;background:#f8fff8;border-bottom:.5px solid #e0f0e0'; sh.textContent=sec.sec; body.appendChild(sh); sec.qs.forEach(q=>{ const d=document.createElement('div'); d.style.cssText='padding:9px 14px;border-bottom:.5px solid #f0f0f0;font-size:13px;color:#111;line-height:1.5'; d.textContent=q; body.appendChild(d); }); });
-  if(!PYQ_PAPER[yr]){ const n=document.createElement('div'); n.style.cssText='padding:14px;font-size:12px;color:#aaa;text-align:center'; n.textContent=`${yr} paper coming soon. Showing 2023.`; body.prepend(n); }
-  go('s-pyq-paper');
-}
-
-// ── MCQ ENGINE ──
-function startMCQ(count, mode='ch'){
-  S.mcq.pool=MCQS.slice(0,Math.min(count,MCQS.length)); S.mcq.total=S.mcq.pool.length; S.mcq.cur=0; S.mcq.correct=0; S.mcq.wrong=[]; S.mcq.answered=false;
-  S.mcq.backTo='s-practice-sel';
-  document.getElementById('mcq-back-btn').onclick=()=>go('s-practice-sel');
-  go('s-mcq'); renderMCQ();
-}
-function renderMCQ(){
-  S.mcq.answered=false;
-  document.getElementById('mcq-prog').textContent=`Q${S.mcq.cur+1}/${S.mcq.total} · Electrostatics`;
-  const msgs=document.getElementById('mcq-msgs'); msgs.innerHTML='';
-  if(S.mcq.cur>=S.mcq.pool.length){ showResult(); return; }
-  const q=S.mcq.pool[S.mcq.cur];
-  const dv=document.createElement('div'); dv.className='dv'; dv.textContent=`${S.mcq.cur+1} / ${S.mcq.total}`; msgs.appendChild(dv);
-  const card=document.createElement('div'); card.className='mcq'; card.innerHTML=`<div class="mcq-lbl"><span>${q.topic}</span></div><div class="mcq-q">${q.q}</div><div class="mcq-opts" id="mo${S.mcq.cur}"></div>`; msgs.appendChild(card);
-  const opts=document.getElementById('mo'+S.mcq.cur);
-  q.opts.forEach((o,i)=>{ const b=document.createElement('div'); b.className='mop'; b.textContent=o; b.onclick=()=>answerQ(i,opts,q); opts.appendChild(b); });
-  msgs.scrollTop=msgs.scrollHeight;
-}
-function answerQ(i,opts,q){
-  if(S.mcq.answered) return; S.mcq.answered=true;
-  const ok=i===q.ans;
-  if(ok) S.mcq.correct++; else S.mcq.wrong.push({...q,chosen:q.opts[i]});
-  [...opts.children].forEach((b,idx)=>{ b.onclick=null; if(idx===q.ans) b.className='mop ok'; else if(idx===i&&!ok) b.className='mop no'; else b.className='mop'; });
-  const msgs=document.getElementById('mcq-msgs');
-  const fb=document.createElement('div'); fb.className='bbl in'; fb.style.background=ok?'#e8f5e9':'#ffebee'; fb.innerHTML=ok?`✅ <b>Correct!</b><div class="bt">now</div>`:`❌ Correct: <b>${q.opts[q.ans]}</b><div class="bt">now</div>`; msgs.appendChild(fb);
-  const isLast=S.mcq.cur>=S.mcq.total-1;
-  const nb=document.createElement('div'); nb.className='qr-btns'; const bb=document.createElement('div'); bb.className='qrb pri'; bb.textContent=isLast?'See Results →':'Next →'; bb.onclick=()=>{ if(isLast)showResult(); else{S.mcq.cur++;renderMCQ();} }; nb.appendChild(bb); msgs.appendChild(nb);
-  msgs.scrollTop=msgs.scrollHeight;
-}
-function showResult(){
-  const {correct,total,wrong}=S.mcq; const pct=Math.round(correct/total*100);
-  const msgs=document.getElementById('result-msgs'); msgs.innerHTML='';
-  const dv=document.createElement('div'); dv.className='dv'; dv.textContent='Session Complete'; msgs.appendChild(dv);
-  const rc=document.createElement('div'); rc.className='res-card'; rc.innerHTML=`<div class="res-big">${correct} / ${total}</div><div style="font-size:11px;color:#8696a0;text-align:center;margin-top:2px">${pct}% Accuracy</div><div class="res-row"><div class="res-st"><div class="res-v" style="color:#075e54">${pct}%</div>Score</div><div class="res-st"><div class="res-v" style="color:#ea580c">🔥 6</div>Streak</div><div class="res-st"><div class="res-v" style="color:#f59e0b">+${correct*5}</div>XP</div></div><div class="bt">now</div>`; msgs.appendChild(rc);
-  if(wrong.length>0){ const wc=document.createElement('div'); wc.className='weak-card'; wc.innerHTML=`<div style="font-size:10px;font-weight:700;color:#ef5350;margin-bottom:5px">📌 WEAK TOPICS</div>${wrong.slice(0,3).map(w=>`<div style="font-size:12.5px;color:#111;padding:2px 0">• ${w.topic}</div>`).join('')}<div class="bt">now</div>`; msgs.appendChild(wc); const rb=document.createElement('div'); rb.className='qr-btns'; rb.style.marginTop='4px'; const btn=document.createElement('div'); btn.className='qrb'; btn.style.cssText='background:#fff7ed;border-color:#f97316;color:#ea580c'; btn.textContent=`↺ Retry ${wrong.length} weak topic${wrong.length>1?'s':''}`; btn.onclick=()=>{ S.mcq.pool=wrong; S.mcq.total=wrong.length; S.mcq.cur=0; S.mcq.correct=0; S.mcq.wrong=[]; go('s-mcq'); renderMCQ(); }; rb.appendChild(btn); msgs.appendChild(rb); }
-  const nb=document.createElement('div'); nb.className='qr-btns'; nb.style.marginTop='4px'; nb.innerHTML=`<div class="qrb pri" onclick="go('s-physics')">🏠 Back to Physics</div><div class="qrb" onclick="go('s-practice-menu')">↺ Practice Again</div>`; msgs.appendChild(nb);
-  go('s-result'); setTimeout(()=>msgs.scrollTop=msgs.scrollHeight,80);
-}
-
-// ── STATUS ──
-function buildStatus(){
-  const body=document.getElementById('status-body'); body.innerHTML='';
-  const sk=document.createElement('div'); sk.style.cssText='background:#fff;padding:12px 14px;border-bottom:8px solid #f0f2f0';
-  sk.innerHTML=`<div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">🔥</span><div><div style="font-size:15px;font-weight:700;color:#ea580c">6 Day Streak</div><div style="font-size:11px;color:#aaa">Best: 14 days</div></div><div style="margin-left:auto;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:3px 8px;font-size:10px;color:#ea580c;font-weight:600">Freeze: 1 left</div></div>`;
-  body.appendChild(sk);
-  const xp=document.createElement('div'); xp.style.cssText='background:#fff;padding:12px 14px;border-bottom:8px solid #f0f2f0;display:flex;justify-content:space-around';
-  xp.innerHTML=`<div style="text-align:center"><div style="font-size:18px">🏆</div><div style="font-size:13px;font-weight:700;color:#075e54">Rank #3</div><div style="font-size:10px;color:#aaa">This week</div></div><div style="text-align:center"><div style="font-size:18px;font-weight:700;color:#f59e0b">42</div><div style="font-size:13px;font-weight:700;color:#f59e0b">MCQs</div><div style="font-size:10px;color:#aaa">All time</div></div><div style="text-align:center"><div style="font-size:18px;font-weight:700;color:#7c3aed">4</div><div style="font-size:13px;font-weight:700;color:#7c3aed">Badges</div><div style="font-size:10px;color:#aaa">Earned</div></div>`;
-  body.appendChild(xp);
-  const hd=document.createElement('div'); hd.className='sec-hd'; hd.textContent='CHAPTER PROGRESS — Tap to continue'; body.appendChild(hd);
-  CHS.forEach(ch=>{
-    const sP=chPct(ch.id,'study'), rP=chPct(ch.id,'revise');
-    const d=document.createElement('div'); d.className='st-row';
-    d.innerHTML=`<div class="st-cn">Ch ${ch.id}: ${ch.name}</div><div class="st-tabs"><div class="st-tab" onclick="S.curCh=${ch.id};go('s-study-ch')"><div class="st-lbl">Study</div><div class="st-bar"><div class="st-fill" style="width:${sP}%"></div></div><div class="st-pct">${sP}%</div></div><div class="st-tab" onclick="S.curCh=${ch.id};S.curRvTab='kp';go('s-revise-ch')"><div class="st-lbl">Revise</div><div class="st-bar"><div class="st-fill" style="width:${rP}%"></div></div><div class="st-pct">${rP}%</div></div></div>`;
-    body.appendChild(d);
-  });
-}
-
-// ── TEACHERS ──
-function buildTeachers(){
-  const el=document.getElementById('teacher-list'); if(el.innerHTML) return;
-  const bc={mas:'#7c3aed',exp:'#f59e0b',ver:'#075e54'};
-  TEACHERS.forEach((t,idx)=>{ const d=document.createElement('div'); d.className='tc'; d.innerHTML=`<div class="tc-top"><div class="tc-av" style="background:${TC_COLORS[idx%TC_COLORS.length]}">${t.init}</div><div style="flex:1;min-width:0"><div class="tc-nm">${t.name} <span class="tc-bdg" style="background:${bc[t.badge]}">${t.badgeLbl}</span></div><div class="tc-school">${t.school}</div></div></div><div class="tc-stats"><div class="tc-stat"><div class="tc-stat-v">${t.students}</div><div class="tc-stat-l">Students</div></div><div class="tc-stat"><div class="tc-stat-v">${t.verified}</div><div class="tc-stat-l">Verified</div></div><div class="tc-stat"><div class="tc-stat-v">${t.exp}</div><div class="tc-stat-l">Exp</div></div><div class="tc-stat"><div class="tc-stat-v">${t.rating}⭐</div><div class="tc-stat-l">Rating</div></div></div><div class="tc-chs">📚 ${t.chs}</div>`; el.appendChild(d); });
-}
 </script>
 </body>
 </html>
